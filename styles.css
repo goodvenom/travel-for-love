@@ -90,7 +90,7 @@ a{color:inherit;text-decoration:none}
 .hero-scene{position:absolute;inset:0;perspective:1100px}
 .hero-layer{position:absolute;inset:-4%;will-change:transform}
 .hero-bg{
-  background:url('assets/hero-panorama.webp') center/cover no-repeat;
+  background:url('./hero-panorama.webp') center/cover no-repeat;
   transform:scale(1.12);filter:saturate(1.05);
 }
 .hero-veil{background:
