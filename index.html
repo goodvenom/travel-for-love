@@ -1196,6 +1196,15 @@
     .hero-actions{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:14px;width:100%}
     .hero-actions .btn{min-height:40px;padding:9px 14px;font-size:12.5px}
   }
+
+  /* ===== MOBILE HERO — text bottom-left corner (2026-10-29) ===== */
+  @media(max-width:640px){
+    .hero-content{left:16px;right:auto;top:auto;bottom:16px;width:min(70%,270px);padding:0;text-align:left;transform:none}
+    .hero h1{font-size:clamp(26px,7.5vw,30px);text-align:left}
+    .hero p.lead.quote-lead{margin:10px 0 0;font-size:13px;line-height:1.42;text-align:left}
+    .hero-actions{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;margin-top:14px;width:100%}
+    .hero-actions .btn{min-height:40px;padding:9px 14px;font-size:12.5px}
+  }
 </style>
 <script>document.documentElement.classList.add('js-anim');</script>
 </head>
