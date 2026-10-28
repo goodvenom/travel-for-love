@@ -1235,6 +1235,17 @@
   .quote-gallery{gap:24px}
   .profile{padding:20px 22px}
   .avatar{width:64px;height:64px}
+
+  /* ===== MOBILE FEATURED — single column, full-width text (2026-10-29) ===== */
+  @media(max-width:820px){
+    .featured{grid-template-columns:1fr}
+    .featured-media{min-height:260px}
+    .featured-body{padding:22px 18px 20px}
+    .featured-body h3{font-size:28px}
+  }
+  @media(max-width:640px){
+    .featured-media{min-height:240px}
+  }
 </style>
 <script>document.documentElement.classList.add('js-anim');</script>
 </head>
