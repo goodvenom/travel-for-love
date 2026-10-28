@@ -1246,8 +1246,17 @@
   @media(max-width:640px){
     .featured-media{min-height:240px}
   }
+
+  /* ===== REAL MAP — Leaflet + OpenStreetMap (2026-10-29) ===== */
+  .real-map-wrap{width:100%}
+  #realMap{width:100%;height:320px;border:1px solid var(--line);border-radius:18px;overflow:hidden;z-index:0;background:#dfe8e2}
+  .real-map-caption{margin:10px 4px 0;color:var(--muted);font-size:12.5px;line-height:1.5}
+  .real-map-wrap .leaflet-popup-content{font-family:"Outfit",sans-serif;font-size:14px;line-height:1.45}
+  .real-map-wrap .leaflet-popup-content b{font-family:"DM Serif Display",Georgia,serif;font-size:17px;font-weight:400}
+  @media(max-width:640px){#realMap{height:280px}}
 </style>
 <script>document.documentElement.classList.add('js-anim');</script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -1545,40 +1554,9 @@
         <li><b>4</b><div><strong>Kodaikanal Lake: 8 km away</strong><span>Dolphin Nose Point is around 8 km from the lake — plan the lake stop before or after the trek.</span></div></li>
       </ul>
       <div class="travel-contact-row">
-        <div class="location-map" id="locationMap" role="button" tabindex="0" aria-expanded="false" aria-label="Ujire, Karnataka map. Click to expand">
-          <div class="location-map-card">
-            <div class="location-map-map" aria-hidden="true">
-              <svg viewBox="0 0 360 280" preserveAspectRatio="none">
-                <line class="map-road main" pathLength="1" x1="0" y1="98" x2="360" y2="98" style="--road-delay:.2s" />
-                <line class="map-road main" pathLength="1" x1="0" y1="182" x2="360" y2="182" style="--road-delay:.3s" />
-                <line class="map-road vertical" pathLength="1" x1="108" y1="0" x2="108" y2="280" style="--road-delay:.4s" />
-                <line class="map-road vertical" pathLength="1" x1="252" y1="0" x2="252" y2="280" style="--road-delay:.5s" />
-                <line class="map-road secondary" pathLength="1" x1="0" y1="56" x2="360" y2="56" style="--road-delay:.6s" />
-                <line class="map-road secondary" pathLength="1" x1="0" y1="140" x2="360" y2="140" style="--road-delay:.7s" />
-                <line class="map-road secondary" pathLength="1" x1="0" y1="224" x2="360" y2="224" style="--road-delay:.8s" />
-                <line class="map-road secondary" pathLength="1" x1="54" y1="0" x2="54" y2="280" style="--road-delay:.7s" />
-                <line class="map-road secondary" pathLength="1" x1="162" y1="0" x2="162" y2="280" style="--road-delay:.8s" />
-                <line class="map-road secondary" pathLength="1" x1="198" y1="0" x2="198" y2="280" style="--road-delay:.9s" />
-                <line class="map-road secondary" pathLength="1" x1="306" y1="0" x2="306" y2="280" style="--road-delay:1s" />
-              </svg>
-              <span class="map-building b1"></span><span class="map-building b2"></span><span class="map-building b3"></span>
-              <span class="map-building b4"></span><span class="map-building b5"></span><span class="map-building b6"></span>
-              <svg class="map-pin" viewBox="0 0 24 24"><path fill="#34d399" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/><circle cx="12" cy="9" r="2.5" fill="#16201c"/></svg>
-            </div>
-            <svg class="location-map-grid" width="100%" height="100%" aria-hidden="true"><defs><pattern id="location-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="currentColor" stroke-width=".5"/></pattern></defs><rect width="100%" height="100%" fill="url(#location-grid)"/></svg>
-            <div class="location-map-content">
-              <div class="location-map-top">
-                <svg class="location-map-fold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
-                <span class="location-map-live"><i></i>Live</span>
-              </div>
-              <div class="location-map-bottom">
-                <h4 class="location-map-name">Ujire, Karnataka</h4>
-                <p class="location-map-coordinates">13.01° N, 75.33° E</p>
-                <div class="location-map-underline"></div>
-              </div>
-            </div>
-          </div>
-          <p class="location-map-hint">Click to expand</p>
+        <div class="real-map-wrap">
+          <div id="realMap" role="application" aria-label="Real map of Travel for love trips"></div>
+          <p class="real-map-caption">Real map — OpenStreetMap, no sign-in needed. Tap a pin for the trip. The green pin is Ujire, Karnataka.</p>
         </div>
       </div>
     </div>
@@ -2727,19 +2705,6 @@
     });
   }
 
-  // Interactive Ujire location card: flat, click-to-expand map reveal.
-  const locationMap = document.getElementById('locationMap');
-  if(locationMap){
-    function toggleLocationMap(){
-      const expanded = locationMap.classList.toggle('is-expanded');
-      locationMap.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      locationMap.setAttribute('aria-label', 'Ujire, Karnataka map. ' + (expanded ? 'Click to collapse' : 'Click to expand'));
-    }
-    locationMap.addEventListener('click', toggleLocationMap);
-    locationMap.addEventListener('keydown', function(event){
-      if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); toggleLocationMap(); }
-    });
-  }
 
   // Oct 6 look: cursor-driven 3D tilt — hero title, section headings, gallery
   // cards, the featured story and the Life quote tiles lean toward the pointer.
@@ -2771,6 +2736,38 @@
 
   applyFilters();
 })();
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Real map — Leaflet + OpenStreetMap tiles, pins for the 8 trips + Ujire base.
+  (function(){
+    var el = document.getElementById('realMap');
+    if(!el || typeof L === 'undefined') return;
+    var map = L.map(el, {scrollWheelZoom: false}).setView([11.3, 76.9], 7);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    var trips = [
+      ["Maidadi View Point", "Kalasa, Chikkamagaluru", 13.2327, 75.3477],
+      ["The Munnar hills", "Munnar, Kerala", 10.07426, 77.06252],
+      ["Neelakurinji Flower", "Kote Betta, Kodagu", 12.5453, 75.7523],
+      ["Mallalli Falls", "Kodagu", 12.68196, 75.72683],
+      ["Kolukkumalai Peak", "Idukki / Theni border", 10.0717, 77.2238],
+      ["Guna Caves", "Kodaikanal", 10.23544, 77.48844],
+      ["Dolphin Nose Point", "Vattakanal, Kodaikanal", 10.21483, 77.48558],
+      ["Dhanushkodi", "Tamil Nadu coast", 9.17845, 79.41649]
+    ];
+    var bounds = [];
+    trips.forEach(function(t){
+      L.marker([t[2], t[3]]).addTo(map).bindPopup('<b>' + t[0] + '</b><br>' + t[1]);
+      bounds.push([t[2], t[3]]);
+    });
+    var baseIcon = L.icon({iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34]});
+    L.marker([13.01, 75.33], {icon: baseIcon}).addTo(map).bindPopup('<b>Ujire, Karnataka</b><br>Base');
+    bounds.push([13.01, 75.33]);
+    map.fitBounds(bounds, {padding: [24, 24]});
+  })();
 </script>
 </body>
 </html>
