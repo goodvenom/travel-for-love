@@ -1205,6 +1205,13 @@
     .hero-actions{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;margin-top:14px;width:100%}
     .hero-actions .btn{min-height:40px;padding:9px 14px;font-size:12.5px}
   }
+
+  /* ===== MOBILE HERO BUTTONS — one line like desktop (2026-10-29) ===== */
+  @media(max-width:640px){
+    .hero-content{width:min(76%,300px)}
+    .hero-actions{flex-wrap:nowrap;gap:6px}
+    .hero-actions .btn{min-height:40px;padding:8px 11px;font-size:11px;gap:5px}
+  }
 </style>
 <script>document.documentElement.classList.add('js-anim');</script>
 </head>
