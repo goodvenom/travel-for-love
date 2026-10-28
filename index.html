@@ -1,15 +1,2676 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="./logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Travel for love \u2014 ride stories by Swasthik across the Western Ghats." />
-    <title>Travel for love \u2014 Swasthik</title>
-    <script type="module" crossorigin src="/travel-for-love/index-DKPzZN6C.js"></script>
-    <link rel="stylesheet" crossorigin href="/travel-for-love/assets/index-BR3cTa45.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" type="image/png" sizes="256x256" href="assets/asset-001.png" />
+<title>Travel for love — Swasthik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFCF7;
+    --surface:#FFFFFF;
+    --surface-2:#FFF7ED;
+    --ink:#1C2320;
+    --muted:#6F7D76;
+    --line:#EDE4D6;
+    --accent:#C25E3A;
+    --accent-2:#1D4A45;
+    --accent-soft:#FEF0E8;
+    --chip:#1C2320;
+    --shadow:0 10px 30px rgba(28,35,32,.08);
+    --shadow-lg:0 20px 50px rgba(28,35,32,.14);
+    --radius-hero:28px;
+    --radius-card:20px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#121816;
+      --surface:#1B2320;
+      --surface-2:#1E2A27;
+      --ink:#F3EFE8;
+      --muted:#9AA8A1;
+      --line:#2A3531;
+      --accent:#E88A66;
+      --accent-2:#7EC8BE;
+      --accent-soft:#2A211C;
+      --chip:#F3EFE8;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --shadow-lg:0 20px 50px rgba(0,0,0,.45);
+    }
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Outfit",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  img{display:block;max-width:100%}
+  button,input{font:inherit}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  @media(max-width:640px){.wrap{padding:0 16px}}
+
+  /* HERO */
+  .hero{padding:18px 0 8px}
+  .hero-card{position:relative;height:520px;border-radius:var(--radius-hero);overflow:hidden;background:#1a2421;box-shadow:var(--shadow-lg);isolation:isolate}
+  @media(max-width:740px){.hero-card{height:460px}}
+  .hero-slides{position:absolute;inset:0;background:#17211d url("assets/asset-002.jpg") center/cover no-repeat}
+  .hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.035);transition:opacity 1.25s ease,transform 7s ease;pointer-events:none}
+  .hero-slide.active{opacity:1;transform:scale(1);z-index:1}
+  .hero-slide.is-video{display:block}
+  .hero-slide.ride-video{left:0;right:0;z-index:2;width:100%;max-width:none;height:100%;object-fit:cover;object-position:center;transform:scale(1.035);box-shadow:none;outline:0;filter:contrast(1.045) saturate(1.06)}
+  .hero-slide.ride-video.active{transform:scale(1)}
+  .ride-video-backdrop,.ride-frame-glow{display:none}
+  .ride-sound-toggle{min-height:40px;border:1px solid rgba(255,255,255,.42);border-radius:999px;padding:8px 12px;background:rgba(8,24,20,.48);color:#fff;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;line-height:1;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 8px 22px rgba(2,8,6,.24);transition:background .2s ease,border-color .2s ease,transform .2s ease,opacity .25s ease}
+  .ride-sound-toggle:hover,.ride-sound-toggle:focus-visible{background:rgba(8,24,20,.72);border-color:rgba(255,255,255,.7);transform:translateY(-1px)}
+  .ride-sound-toggle svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+  .ride-sound-toggle .sound-on-icon{display:none}
+  .ride-sound-toggle[aria-pressed="true"] .sound-on-icon{display:block}
+  .ride-sound-toggle[aria-pressed="true"] .sound-off-icon{display:none}
+  .ride-sound-toggle[hidden]{display:none}
+  @media(max-width:640px){.ride-sound-toggle{min-height:36px;padding:7px 10px;font-size:11.5px}.ride-sound-toggle svg{width:16px;height:16px}}
+  @media(prefers-reduced-motion:reduce){.ride-sound-toggle{transition:none}.ride-sound-toggle:hover,.ride-sound-toggle:focus-visible{transform:none}}
+  .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(10,18,16,.05) 0%,rgba(10,18,16,.08) 42%,rgba(10,18,16,.78) 100%);pointer-events:none}
+  .hero-card:has(.ride-video.active) .hero-overlay{background:linear-gradient(90deg,rgba(4,12,9,.42) 0%,rgba(4,12,9,.12) 46%,rgba(4,12,9,.18) 100%),linear-gradient(180deg,rgba(4,12,9,.15) 0%,rgba(4,12,9,.06) 38%,rgba(4,12,9,.82) 100%)}
+  .hero-card:has(.ride-video.active) .hero-content{text-shadow:0 2px 16px rgba(2,8,6,.72)}
+  .hero-content{position:absolute;left:0;right:0;bottom:0;z-index:4;padding:28px 72px 26px;color:#fff}
+  @media(max-width:640px){
+    .hero-content{left:54px;right:auto;bottom:54px;width:min(58%,190px);padding:0;color:#fff}
+  }
+  .slide-arrow{position:absolute;z-index:6;top:50%;width:42px;height:42px;margin-top:-21px;border-radius:50%;border:1px solid rgba(255,255,255,.48);background:rgba(8,24,20,.32);color:#fff;display:grid;place-items:center;font-size:27px;line-height:1;cursor:pointer;backdrop-filter:blur(7px);transition:background .25s ease,transform .25s ease}
+  .slide-arrow:hover,.slide-arrow:focus-visible{background:rgba(8,24,20,.62);transform:scale(1.06)}
+  .slide-prev{left:16px}.slide-next{right:16px}
+  .slide-dots{position:absolute;z-index:6;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:rgba(8,24,20,.3);backdrop-filter:blur(7px)}
+  .slide-dot{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:rgba(255,255,255,.52);cursor:pointer;transition:width .3s ease,background .3s ease}
+  .slide-dot.active{width:24px;border-radius:999px;background:#fff}
+  @media(max-width:640px){.slide-arrow{width:36px;height:36px;margin-top:-18px;font-size:23px}.slide-prev{left:10px}.slide-next{right:10px}.slide-dots{bottom:16px}}
+  @media(prefers-reduced-motion:reduce){.hero-slide{transition:none;transform:none}.slide-arrow,.slide-dot{transition:none}}
+  .hero-top{position:absolute;top:16px;left:16px;right:16px;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .brand-logo{height:64px;width:auto;border-radius:14px;box-shadow:0 8px 20px rgba(10,18,16,.25);border:1px solid rgba(255,255,255,.35)}
+  @media(max-width:640px){.brand-logo{height:52px}}
+  .pill-live{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.92);color:#14201c;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.02em;backdrop-filter:blur(6px)}
+  .pill-live i{width:8px;height:8px;border-radius:50%;background:#1D9E75;display:block}
+  .pill-glass{background:rgba(0,0,0,.28);color:#fff;border:1px solid rgba(255,255,255,.22);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:500;backdrop-filter:blur(6px)}
+  .hero h1{font-family:"Alex Brush", "DM Serif Display", Georgia, serif;font-weight:400;font-size:52px;line-height:.95;letter-spacing:-.02em;margin:0;max-width:100%;white-space:nowrap}
+  @media(max-width:640px){.hero h1{font-size:clamp(22px,6.2vw,24px);line-height:1;white-space:nowrap}}
+  .hero h1 em{font-style:normal;font-weight:400;color:#FFF0E3;text-shadow:0 2px 10px rgba(6,14,12,.72),0 0 1px rgba(6,14,12,.9)}
+  .hero p.lead{margin:12px 0 0;max-width:52ch;font-size:17px;line-height:1.5;color:rgba(255,255,255,.92)}
+  .hero p.lead.quote-lead{position:relative;overflow:hidden;max-width:58ch;font-family:"DM Serif Display",Georgia,serif;font-size:15px;font-style:italic;line-height:1.42;text-wrap:balance;text-shadow:0 2px 10px rgba(5,13,10,.48)}
+  .hero .quote-lead span{position:relative;z-index:1;display:block}
+  .hero .quote-lead .quote-line{font-size:1.08em;color:#fff}
+  .hero .quote-lead .quote-follow{margin-top:5px;color:rgba(255,255,255,.86)}
+  .hero .quote-lead::after{content:"";position:absolute;z-index:2;inset:-30% -45%;pointer-events:none;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.28) 49%,rgba(255,255,255,.08) 53%,transparent 60%);transform:translateX(-62%) skewX(-10deg);mix-blend-mode:screen;animation:quoteShimmer 6.2s cubic-bezier(.45,.02,.2,1) 1.5s infinite}
+  @keyframes quoteShimmer{0%,68%{transform:translateX(-62%) skewX(-10deg);opacity:0}72%{opacity:.72}88%{opacity:.34}96%,100%{transform:translateX(62%) skewX(-10deg);opacity:0}}
+  @media(max-width:640px){
+    .hero p.lead{font-size:13px}
+    .hero p.lead.quote-lead{margin-top:8px;max-width:100%;font-size:10.5px;line-height:1.28;text-wrap:pretty}
+    .hero .quote-lead .quote-line{font-size:1.04em}
+    .hero .quote-lead .quote-follow{margin-top:4px;color:rgba(255,255,255,.88)}
+    .hero-actions{flex-wrap:nowrap;gap:6px;margin-top:10px;width:max-content;max-width:calc(100vw - 104px)}
+    .hero-actions .btn{min-height:40px;padding:7px 10px;gap:5px;font-size:10.5px;line-height:1.2;white-space:nowrap}
+  }
+  @media(prefers-reduced-motion:reduce){.hero .quote-lead::after{animation:none;display:none}}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14.5px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:.18s}
+  .btn-primary{background:#fff;color:#15201c}
+  .btn-primary:hover{transform:translateY(-1px)}
+  .btn-ghost{background:rgba(255,255,255,.28);color:#fff;border-color:rgba(255,255,255,.52);backdrop-filter:blur(6px)}
+  .btn-ghost:hover{background:rgba(255,255,255,.36)}
+
+  /* Premium sheen + lift + glow on the hero actions only (Explore trips / Follow on Instagram) */
+  .hero-actions .btn{position:relative;overflow:hidden;isolation:isolate;transition:transform .45s cubic-bezier(.22,.61,.36,1),box-shadow .45s cubic-bezier(.22,.61,.36,1),background .3s ease,border-color .3s ease}
+  .hero-actions .btn::after{content:"";position:absolute;inset:-12% -30%;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.55) 50%,transparent 62%);transform:translateX(-130%) skewX(-14deg);opacity:0;transition:transform .95s cubic-bezier(.22,.61,.36,1),opacity .3s ease;pointer-events:none}
+  .hero-actions .btn:active::after{transition-duration:.55s}
+  .hero-actions .btn-primary::after{background:linear-gradient(115deg,transparent 38%,rgba(194,94,58,.28) 50%,transparent 62%)}
+  @media (prefers-reduced-motion: no-preference){
+    .hero-actions .btn:hover,.hero-actions .btn:focus-visible{transform:translateY(-3px);box-shadow:0 14px 30px rgba(6,14,12,.38),0 0 0 1px rgba(255,255,255,.18),0 0 26px rgba(255,214,170,.38)}
+    .hero-actions .btn:active{transform:translateY(-1px) scale(.985);transition-duration:.18s}
+    .hero-actions .btn:hover::after,.hero-actions .btn:focus-visible::after,.hero-actions .btn:active::after{transform:translateX(130%) skewX(-14deg);opacity:1}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-actions .btn,.hero-actions .btn::after{transition:none}
+    .hero-actions .btn:hover,.hero-actions .btn:focus-visible,.hero-actions .btn:active{transform:none;box-shadow:none}
+    .hero-actions .btn::after{display:none}
+  }
+
+  /* Hero elements stay at rest until the reader scrolls or points at an interactive control. */
+  .hero h1 .hl{display:inline-block}
+  .hero h1 .hl + .hl{margin-left:.13em}
+
+
+  /* PROFILE STRIP */
+  .profile{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:16px 18px;display:flex;gap:16px;align-items:center;box-shadow:var(--shadow)}
+  @media(max-width:640px){.profile{flex-wrap:wrap}}
+  .avatar{width:56px;height:56px;border-radius:50%;background:var(--accent-2);color:#fff;display:grid;place-items:center;font-family:"DM Serif Display",serif;font-size:26px;flex-shrink:0;border:3px solid var(--surface-2);box-shadow:0 0 0 1px var(--line)}
+  .profile-main{flex:1;min-width:200px}
+  .profile-main strong{font-size:17px;letter-spacing:-.01em}
+  .profile-main span{display:block;color:var(--muted);font-size:14px;line-height:1.4;margin-top:1px}
+  .stats{display:flex;gap:18px;margin-left:auto}
+  @media(max-width:640px){.stats{margin-left:0;width:100%;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px}}
+  .stat{text-align:center;min-width:64px}
+  .stat b{display:block;font-size:18px;line-height:1}
+  .stat label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+  /* FILTER */
+  .filterbar{position:sticky;top:64px;z-index:20;margin-top:22px;background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:999px;padding:8px;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow)}
+  @media(max-width:740px){.filterbar{top:72px;border-radius:20px;flex-wrap:wrap}}
+  .search{flex:1;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 14px;min-width:180px}
+  .search input{border:0;outline:0;background:transparent;width:100%;color:var(--ink);font-size:14.5px}
+  .search input::placeholder{color:var(--muted)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 14px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  @media (prefers-color-scheme: dark){.chip.active{background:#F3EFE8;color:#121816;border-color:#F3EFE8}}
+
+  /* SECTION HEAD */
+  .section{margin-top:34px}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:16px}
+  .section-head h2{font-family:"DM Serif Display",serif;font-weight:400;font-size:30px;line-height:1;letter-spacing:-.02em;margin:0}
+  .section-head p{margin:4px 0 0;color:var(--muted);font-size:14.5px;max-width:52ch}
+  .section-head p.section-quote-line{margin-top:8px;font-family:"DM Serif Display",Georgia,serif;font-style:italic;font-size:clamp(8px,2.6vw,19px);line-height:1.35;color:var(--ink);max-width:none;white-space:nowrap}
+  .link{font-size:14px;font-weight:600;color:var(--accent);text-decoration:none;white-space:nowrap}
+
+  /* FEATURED */
+  .featured{display:grid;grid-template-columns:1.15fr .85fr;background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+  @media(max-width:820px){.featured{grid-template-columns:1fr}}
+  .featured-media{position:relative;min-height:320px}
+  .featured-media img,.featured-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .featured-media video{display:block}
+  .badge{position:absolute;top:14px;left:14px;background:#fff;color:#18211e;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+  .featured-body{padding:26px 24px 22px;display:flex;flex-direction:column}
+  .meta{font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .featured-body h3{font-family:"DM Serif Display",serif;font-weight:400;font-size:30px;line-height:1.05;margin:8px 0 8px;letter-spacing:-.01em}
+  .featured-body p{color:var(--muted);font-size:15.5px;line-height:1.6;margin:0}
+  .facts{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+  .fact b{display:block;font-size:14px}
+  .fact span{font-size:12.5px;color:var(--muted)}
+  .featured-body .btn{margin-top:18px;align-self:flex-start;background:var(--ink);color:var(--bg)}
+  @media (prefers-color-scheme: dark){.featured-body .btn{background:#F3EFE8;color:#121816}}
+
+  /* GRID */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;display:flex;flex-direction:column;transition:transform .18s, box-shadow .18s}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+  .card-media{position:relative;aspect-ratio:4/3;overflow:hidden;background:#101512}
+  .card-media img{width:100%;height:100%;object-fit:contain;transition:transform .5s}
+  .card-media video{width:100%;height:100%;object-fit:contain;display:block;background:#101512}
+  .card:hover .card-media img{transform:none}
+  .card-media .tag{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.94);color:#17201c;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 8px;border-radius:999px}
+  .heart{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.94);display:grid;place-items:center;cursor:pointer;font-size:16px;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+  .heart.liked{background:#FFE8E0}
+
+  /* Like-button star-burst — From Uiverse.io by dalbrechtmartin, scaled down and scoped to .like-star-btn only */
+  .like-star-btn{transition:all 0.3s ease-in-out;overflow:visible}
+  .like-star-btn .star-1{position:absolute;top:20%;left:20%;width:10px;height:auto;filter:drop-shadow(0 0 0 #fffdef);z-index:-5;transition:all 0.8s cubic-bezier(0.05, 0.83, 0.43, 0.96);pointer-events:none}
+  .like-star-btn .star-2{position:absolute;top:45%;left:45%;width:6px;height:auto;filter:drop-shadow(0 0 0 #fffdef);z-index:-5;transition:all 0.8s cubic-bezier(0, 0.4, 0, 1.01);pointer-events:none}
+  .like-star-btn .star-3{position:absolute;top:40%;left:40%;width:3px;height:auto;filter:drop-shadow(0 0 0 #fffdef);z-index:-5;transition:all 0.8s cubic-bezier(0, 0.4, 0, 1.01);pointer-events:none}
+  .like-star-btn .star-4{position:absolute;top:20%;left:40%;width:4px;height:auto;filter:drop-shadow(0 0 0 #fffdef);z-index:-5;transition:all 0.8s cubic-bezier(0, 0.4, 0, 1.01);pointer-events:none}
+  .like-star-btn .star-5{position:absolute;top:25%;left:45%;width:6px;height:auto;filter:drop-shadow(0 0 0 #fffdef);z-index:-5;transition:all 0.8s cubic-bezier(0, 0.4, 0, 1.01);pointer-events:none}
+  .like-star-btn .star-6{position:absolute;top:5%;left:50%;width:3px;height:auto;filter:drop-shadow(0 0 0 #fffdef);z-index:-5;transition:all 0.8s cubic-bezier(0, 0.4, 0, 1.01);pointer-events:none}
+  .like-star-btn:hover,.like-star-btn:focus-visible,.like-star-btn.bursting{box-shadow:0 4px 12px rgba(0,0,0,.12),0 0 26px #ffffff8c;transform:scale(1.1)}
+  .like-star-btn:hover .star-1,.like-star-btn:focus-visible .star-1,.like-star-btn.bursting .star-1{position:absolute;top:-20%;left:-20%;width:9px;height:auto;filter:drop-shadow(0 0 5px #fffdef);z-index:2}
+  .like-star-btn:hover .star-2,.like-star-btn:focus-visible .star-2,.like-star-btn.bursting .star-2{position:absolute;top:35%;left:-25%;width:6px;height:auto;filter:drop-shadow(0 0 5px #fffdef);z-index:2}
+  .like-star-btn:hover .star-3,.like-star-btn:focus-visible .star-3,.like-star-btn.bursting .star-3{position:absolute;top:80%;left:-10%;width:4px;height:auto;filter:drop-shadow(0 0 5px #fffdef);z-index:2}
+  .like-star-btn:hover .star-4,.like-star-btn:focus-visible .star-4,.like-star-btn.bursting .star-4{position:absolute;top:-25%;left:105%;width:9px;height:auto;filter:drop-shadow(0 0 5px #fffdef);z-index:2}
+  .like-star-btn:hover .star-5,.like-star-btn:focus-visible .star-5,.like-star-btn.bursting .star-5{position:absolute;top:30%;left:115%;width:6px;height:auto;filter:drop-shadow(0 0 5px #fffdef);z-index:2}
+  .like-star-btn:hover .star-6,.like-star-btn:focus-visible .star-6,.like-star-btn.bursting .star-6{position:absolute;top:80%;left:105%;width:4px;height:auto;filter:drop-shadow(0 0 5px #fffdef);z-index:2}
+  .like-star-btn .fil0{fill:#fffdef}
+  @media (prefers-reduced-motion: reduce){
+    .like-star-btn,
+    .like-star-btn .star-1,
+    .like-star-btn .star-2,
+    .like-star-btn .star-3,
+    .like-star-btn .star-4,
+    .like-star-btn .star-5,
+    .like-star-btn .star-6{transition:none}
+  }
+  .card-body{padding:16px 16px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .card-body .loc{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-2)}
+  @media (prefers-color-scheme: dark){.card-body .loc{color:var(--accent-2)}}
+  .card-body h3{font-family:"DM Serif Display",serif;font-weight:400;font-size:21px;line-height:1.1;margin:0;letter-spacing:-.01em}
+  .card-body p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .card-foot{margin-top:auto;padding-top:12px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+  .card-foot strong{color:var(--ink);font-weight:600}
+
+  /* Cursor-following glow for the gallery cards. The masked duplicate grid is
+     non-interactive and sits exactly over the original grid, so the resting
+     cards keep their existing appearance and layout. */
+  .glowing-grid-shell{position:relative}
+  .glowing-grid-shell > #grid{position:relative;z-index:1}
+  .glowing-grid-overlay{position:absolute;z-index:2;inset:0;pointer-events:none;user-select:none;opacity:0;transition:opacity 400ms ease-out;-webkit-mask:radial-gradient(25rem 25rem at var(--x,0px) var(--y,0px),#000 1%,transparent 50%);mask:radial-gradient(25rem 25rem at var(--x,0px) var(--y,0px),#000 1%,transparent 50%)}
+  .glowing-grid-overlay .card{background-color:rgba(245,158,11,.082);border-color:#f59e0b;box-shadow:0 0 0 1px inset #f59e0b}
+  .glowing-grid-overlay .card.is-glow-hovered{transform:translateY(-3px)}
+  .glowing-grid-overlay .card.is-glow-hovered .card-media img{transform:none}
+  .glowing-grid-overlay .card[data-card-enter]{opacity:1;transform:none;transition:transform .18s,box-shadow .18s}
+  .glowing-grid-overlay .card[data-card-enter].is-glow-hovered{transform:translateY(-3px)}
+  @media (prefers-reduced-motion:reduce){.glowing-grid-overlay{display:none;transition:none}}
+
+  .empty{grid-column:1/-1;text-align:center;padding:36px 16px;border:1px dashed var(--line);border-radius:18px;background:var(--surface);color:var(--muted)}
+
+  /* ON THE ROAD HIGHLIGHTS STRIP */
+  .road-strip{overflow:hidden;padding:12px 0 16px;margin:-12px 0 -16px}
+  .road-track{display:flex;width:max-content;will-change:transform}
+  .road-set{display:flex;gap:14px;padding-right:14px}
+  .road-frame{position:relative;flex:0 0 auto;width:252px;height:162px;border-radius:16px;overflow:hidden;border:1px solid var(--line);padding:0;cursor:pointer;background:#202723;box-shadow:var(--shadow);transition:transform .5s cubic-bezier(.22,.61,.36,1),box-shadow .5s cubic-bezier(.22,.61,.36,1),border-color .4s ease;will-change:transform}
+  @media(max-width:640px){.road-frame{width:204px;height:134px}}
+  .road-frame img,.road-frame video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.22,.61,.36,1),filter .5s ease}
+  .road-frame .cap{position:absolute;left:10px;bottom:10px;background:rgba(10,16,14,.55);color:#fff;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:5px 10px;border-radius:999px;backdrop-filter:blur(4px);transition:transform .45s cubic-bezier(.22,.61,.36,1),background .35s ease;z-index:2}
+  .road-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.16) 46%,rgba(255,255,255,.34) 50%,rgba(255,255,255,.16) 54%,transparent 68%);transform:translateX(-130%) skewX(-10deg);opacity:0;transition:transform .95s cubic-bezier(.22,.61,.36,1),opacity .3s ease;pointer-events:none;z-index:1}
+  @media (prefers-reduced-motion: no-preference){
+    .road-frame:hover,.road-frame:focus-visible{transform:translateY(-6px) scale(1.045);border-color:color-mix(in srgb, var(--accent) 55%, transparent);box-shadow:0 20px 42px rgba(10,16,14,.34),0 12px 34px color-mix(in srgb, var(--accent) 38%, transparent);z-index:3}
+    .road-frame:active{transform:translateY(-2px) scale(1.02);transition-duration:.18s}
+    .road-frame:hover img,.road-frame:hover video,.road-frame:focus-visible img,.road-frame:focus-visible video{transform:scale(1.1);filter:brightness(1.07) saturate(1.08)}
+    .road-frame:hover .cap,.road-frame:focus-visible .cap{transform:translateY(-3px);background:var(--accent)}
+    .road-frame:hover::after,.road-frame:focus-visible::after{transform:translateX(130%) skewX(-10deg);opacity:1}
+  }
+
+  /* JOURNAL + ABOUT */
+  .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:18px;align-items:stretch}
+  @media(max-width:820px){.two{grid-template-columns:1fr}}
+  .panel{height:100%;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+  .panel h3{font-family:"DM Serif Display",serif;font-weight:400;font-size:24px;margin:0 0 6px;line-height:1}
+  .panel p{color:var(--muted);font-size:15px;margin:0}
+  .notes{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:12px}
+  .notes li{display:flex;gap:12px;align-items:flex-start;padding:12px 12px;border-radius:14px;background:var(--surface-2);border:1px solid var(--line)}
+  .notes li b{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:13px;flex-shrink:0;margin-top:1px}
+  @media (prefers-color-scheme: dark){.notes li b{background:#F3EFE8;color:#121816}}
+  .notes li div strong{display:block;font-size:14.5px;line-height:1.2}
+  .notes li div span{font-size:13.5px;color:var(--muted);line-height:1.45;display:block;margin-top:2px}
+
+  .bucket{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+  .bucket li{display:flex;align-items:center;gap:10px;font-size:14.5px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+  .bucket li::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  .bucket li.done{opacity:.65;text-decoration:line-through}
+  .bucket li.done::before{background:#2E9E7A}
+
+  /* CTA */
+  .cta{margin-top:22px;border-radius:24px;background:var(--accent-2);color:#EAF6F3;padding:26px 24px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;overflow:hidden;position:relative}
+  @media (prefers-color-scheme: dark){.cta{background:#1E3A36}}
+  .cta h3{font-family:"DM Serif Display",serif;font-weight:400;font-size:28px;line-height:1;margin:0;letter-spacing:-.01em}
+  .cta p{margin:6px 0 0;color:rgba(234,246,243,.82);font-size:15px;max-width:52ch}
+  .cta .btn{background:#fff;color:#12302B;flex-shrink:0}
+
+  /* INSTAGRAM ICON (Uiverse component by vinodjangid07, scoped under .ig-follow) */
+  .ig-follow{margin-top:22px;padding:112px 24px 52px;display:flex;justify-content:center;position:relative}
+  .ig-follow .tooltip-container{position:relative;cursor:pointer;transition:all 0.2s;font-size:15px;border-radius:8px;transform:translateX(56px)}
+  .ig-follow .tooltip{position:absolute;top:0;left:50%;transform:translateX(-50%);width:206px;padding:8px;opacity:0;pointer-events:none;transition:all 0.3s;border-radius:12px;box-shadow:inset 5px 5px 5px rgba(0, 0, 0, 0.2),inset -5px -5px 15px rgba(255, 255, 255, 0.1),5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1)}
+  .ig-follow .profile{display:block;margin:0;background:#2a2b2f;border-radius:8px 12px;padding:8px;border:1px solid #52382f;box-shadow:none}
+  .ig-follow .tooltip-container:hover .tooltip,.ig-follow .tooltip-container:focus-within .tooltip{top:-108px;opacity:1;visibility:visible;pointer-events:auto}
+  .ig-follow .icon{text-decoration:none;color:#fff;display:block;position:relative}
+  .ig-follow .layer{width:40px;height:40px;display:block;position:relative;transition:transform 0.3s}
+  .ig-follow .icon:hover .layer,.ig-follow .icon:focus-visible .layer{transform:rotate(-35deg) skew(20deg)}
+  .ig-follow .layer span{position:absolute;top:0;left:0;height:100%;width:100%;border:1px solid #fff;border-radius:11px;transition:all 0.3s}
+  .ig-follow .layer span,.ig-follow .text{color:#e6683c;border-color:#e6683c}
+  .ig-follow .icon:hover .layer span{box-shadow:-1px 1px 3px #e6683c}
+  .ig-follow .icon .text{position:absolute;left:50%;bottom:-5px;opacity:0;font-weight:500;transform:translateX(-50%);transition:bottom 0.3s ease, opacity 0.3s ease;white-space:nowrap}
+  .ig-follow .icon:hover .text,.ig-follow .icon:focus-visible .text{bottom:-27px;opacity:1}
+  .ig-follow .icon:hover .layer span:nth-child(1),.ig-follow .icon:focus-visible .layer span:nth-child(1){opacity:0.2}
+  .ig-follow .icon:hover .layer span:nth-child(2),.ig-follow .icon:focus-visible .layer span:nth-child(2){opacity:0.4;transform:translate(4px, -4px)}
+  .ig-follow .icon:hover .layer span:nth-child(3),.ig-follow .icon:focus-visible .layer span:nth-child(3){opacity:0.6;transform:translate(8px, -8px)}
+  .ig-follow .icon:hover .layer span:nth-child(4),.ig-follow .icon:focus-visible .layer span:nth-child(4){opacity:0.8;transform:translate(12px, -12px)}
+  .ig-follow .icon:hover .layer span:nth-child(5),.ig-follow .icon:focus-visible .layer span:nth-child(5){opacity:1;transform:translate(16px, -16px)}
+  .ig-follow .instagramSVG{font-size:19px;display:flex;align-items:center;justify-content:center;background:-webkit-linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)}
+  .ig-follow .user{display:flex;gap:8px;align-items:center}
+  .ig-follow .img{width:38px;height:38px;flex-shrink:0;font-size:19px;font-weight:700;border:1px solid #e6683c;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden}
+  .ig-follow .img img{width:100%;height:100%;object-fit:cover}
+  .ig-follow .name{font-size:15px;font-weight:700;color:#e6683c;line-height:1.25}
+  .ig-follow .username{font-size:12.5px;color:#ccc;line-height:1.3}
+  .ig-follow .details{display:flex;flex-direction:column;gap:0;color:#fff}
+  .ig-follow .about{color:#ccc;padding-top:4px;font-size:12.5px;line-height:1.45}
+  .js-anim .ig-follow [data-reveal]{opacity:1;transform:none;transition:none}
+  @media (prefers-reduced-motion: reduce){
+    .ig-follow .tooltip-container,.ig-follow .tooltip,.ig-follow .layer,.ig-follow .layer span,.ig-follow .icon .text{transition:none}
+    .ig-follow .icon:hover .layer,.ig-follow .icon:focus-visible .layer{transform:none}
+    .ig-follow .icon:hover .layer span,.ig-follow .icon:focus-visible .layer span{transform:none}
+  }
+  /* Centered location map at the end of the travel-tips panel */
+  .travel-contact-row{margin-top:18px;padding:26px 0 32px;display:grid;grid-template-columns:minmax(0,312px);place-items:center;justify-content:center}
+
+  /* Interactive location map — vanilla port of the supplied motion component */
+  .location-map{position:relative;width:min(220px,100%);height:140px;justify-self:center;cursor:pointer;user-select:none;outline:none;transition:width .62s cubic-bezier(.34,1.56,.64,1),height .62s cubic-bezier(.34,1.56,.64,1)}
+  .location-map.is-expanded{width:312px;height:280px}
+  .location-map:focus-visible .location-map-card{outline:2px solid #34d399;outline-offset:4px}
+  .location-map-card{position:absolute;inset:0;overflow:hidden;border:1px solid rgba(166,184,176,.2);border-radius:18px;background:linear-gradient(145deg,#1a221f 0%,#101714 100%);color:#f3f7f5;box-shadow:0 16px 38px rgba(4,12,9,.3),inset 0 1px 0 rgba(255,255,255,.035)}
+  .location-map-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(148,163,158,.08),transparent 46%,rgba(148,163,158,.12));pointer-events:none}
+  .location-map-grid{position:absolute;inset:0;opacity:.08;transition:opacity .3s ease}
+  .location-map.is-expanded .location-map-grid{opacity:0}
+  .location-map-map{position:absolute;inset:0;opacity:0;background:#1c2421;transition:opacity .4s ease .08s;pointer-events:none}
+  .location-map.is-expanded .location-map-map{opacity:1}
+  .location-map-map>svg:first-child{position:absolute;inset:0;width:100%;height:100%}
+  .map-road{fill:none;stroke:rgba(241,246,243,.24);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+  .map-road.main{stroke-width:4}
+  .map-road.vertical{stroke:rgba(241,246,243,.19);stroke-width:3}
+  .map-road.secondary{stroke:rgba(241,246,243,.1);stroke-width:1.5}
+  .location-map.is-expanded .map-road{animation:mapRoadDraw .72s ease forwards;animation-delay:var(--road-delay,.2s)}
+  @keyframes mapRoadDraw{to{stroke-dashoffset:0}}
+  .map-building{position:absolute;border:1px solid rgba(163,177,171,.16);border-radius:3px;background:rgba(163,177,171,.22);opacity:0;transform:scale(.78)}
+  .map-building.b1{top:40%;left:10%;width:15%;height:20%;--building-delay:.5s}
+  .map-building.b2{top:15%;left:35%;width:12%;height:15%;--building-delay:.6s}
+  .map-building.b3{top:70%;left:75%;width:18%;height:18%;--building-delay:.7s}
+  .map-building.b4{top:20%;right:10%;width:10%;height:25%;--building-delay:.55s}
+  .map-building.b5{top:55%;left:5%;width:8%;height:12%;--building-delay:.65s}
+  .map-building.b6{top:8%;left:75%;width:14%;height:10%;--building-delay:.75s}
+  .location-map.is-expanded .map-building{animation:mapBuildingPop .42s ease forwards;animation-delay:var(--building-delay,.5s)}
+  @keyframes mapBuildingPop{to{opacity:1;transform:scale(1)}}
+  .map-pin{position:absolute;top:50%;left:50%;width:34px;height:34px;margin:-17px 0 0 -17px;opacity:0;filter:drop-shadow(0 0 10px rgba(52,211,153,.55));transform:translateY(-20px) scale(0)}
+  .location-map.is-expanded .map-pin{animation:mapPinDrop .64s cubic-bezier(.34,1.56,.64,1) .3s forwards}
+  @keyframes mapPinDrop{to{opacity:1;transform:translateY(0) scale(1)}}
+  .location-map-map::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,15,13,.82),transparent 54%)}
+  .location-map-content{position:relative;z-index:2;height:100%;padding:18px 18px 16px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+  .location-map-top{display:flex;align-items:flex-start;justify-content:space-between}
+  .location-map-fold{width:19px;height:19px;color:#34d399;filter:drop-shadow(0 0 4px rgba(52,211,153,.32));transition:opacity .3s ease,filter .3s ease}
+  .location-map:hover .location-map-fold{filter:drop-shadow(0 0 8px rgba(52,211,153,.65))}
+  .location-map.is-expanded .location-map-fold{opacity:0}
+  .location-map-live{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.055);color:#aab7b1;font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;backdrop-filter:blur(5px);transition:transform .2s ease,background .2s ease}
+  .location-map:hover .location-map-live{transform:scale(1.05);background:rgba(255,255,255,.09)}
+  .location-map-live i{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px rgba(52,211,153,.5)}
+  .location-map-bottom{position:relative;text-shadow:0 2px 12px rgba(0,0,0,.55)}
+  .location-map-name{margin:0;color:#f3f7f5;font-size:14px;font-weight:500;line-height:1.25;letter-spacing:-.01em;transition:transform .32s cubic-bezier(.22,.61,.36,1)}
+  .location-map:hover .location-map-name{transform:translateX(4px)}
+  .location-map-coordinates{height:0;margin:0;color:#aab7b1;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.35;opacity:0;transform:translateY(-8px);overflow:hidden;transition:height .3s ease,opacity .25s ease .13s,transform .25s ease .13s}
+  .location-map.is-expanded .location-map-coordinates{height:18px;margin-top:4px;opacity:1;transform:none}
+  .location-map-underline{height:1px;margin-top:7px;background:linear-gradient(90deg,rgba(16,185,129,.65),rgba(52,211,153,.35),transparent);transform:scaleX(.3);transform-origin:left;transition:transform .4s ease}
+  .location-map:hover .location-map-underline,.location-map.is-expanded .location-map-underline{transform:scaleX(1)}
+  .location-map-hint{position:absolute;left:50%;bottom:-25px;margin:0;color:var(--muted);font-size:10px;line-height:1;white-space:nowrap;opacity:0;transform:translate(-50%,4px);transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+  .location-map:hover:not(.is-expanded) .location-map-hint,.location-map:focus-visible:not(.is-expanded) .location-map-hint{opacity:1;transform:translate(-50%,0)}
+  @media(max-width:1100px){
+    .location-map,.location-map.is-expanded{width:min(100%,312px)}
+  }
+  @media(max-width:560px){
+    .travel-contact-row{padding:24px 0 30px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .location-map,.location-map-grid,.location-map-map,.location-map-fold,.location-map-live,.location-map-name,.location-map-coordinates,.location-map-underline,.location-map-hint{transition:none}
+    .location-map-card{transform:none !important}
+    .location-map.is-expanded .map-road{animation:none;stroke-dashoffset:0}
+    .location-map.is-expanded .map-building{animation:none;opacity:1;transform:none}
+    .location-map.is-expanded .map-pin{animation:none;opacity:1;transform:none}
+  }
+
+  /* ABOUT TILT CARD (Uiverse.io by 00Kubi, scoped under .about-tilt) */
+/* From Uiverse.io by 00Kubi - saved from user's message 2026-10-02 */
+.about-tilt .container {
+  position: relative;
+  width: 190px;
+  height: 254px;
+  transition: 200ms;
+}
+
+.about-tilt .container:active {
+  width: 180px;
+  height: 245px;
+}
+
+.about-tilt #card {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  transition: 700ms;
+  background: linear-gradient(45deg, #1a1a1a, #262626);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.3),
+    inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.about-tilt .card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.about-tilt #prompt {
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  transition: 300ms ease-in-out;
+  position: absolute;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.about-tilt .title {
+  opacity: 0;
+  transition: 300ms ease-in-out;
+  position: absolute;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-align: center;
+  width: 100%;
+  padding-top: 20px;
+  background: linear-gradient(45deg, #00ffaa, #00a2ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 170, 0.3));
+  text-shadow:
+    0 0 10px rgba(92, 103, 255, 0.5),
+    0 0 20px rgba(92, 103, 255, 0.3);
+}
+
+.about-tilt .subtitle {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 2px;
+  transform: translateY(30px);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.about-tilt .highlight {
+  color: #00ffaa;
+  margin-left: 5px;
+  background: linear-gradient(90deg, #5c67ff, #ad51ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.about-tilt .glowing-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.about-tilt .glow-1,
+.about-tilt .glow-2,
+.about-tilt .glow-3 {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 170, 0.3) 0%,
+    rgba(0, 255, 170, 0) 70%
+  );
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.about-tilt .glow-1 {
+  top: -20px;
+  left: -20px;
+}
+.about-tilt .glow-2 {
+  top: 50%;
+  right: -30px;
+  transform: translateY(-50%);
+}
+.about-tilt .glow-3 {
+  bottom: -20px;
+  left: 30%;
+}
+
+.about-tilt .card-particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #00ffaa;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effects */
+.about-tilt .tracker:hover ~ #card .title {
+  opacity: 1;
+  transform: translateY(-10px);
+}
+
+.about-tilt .tracker:hover ~ #card .glowing-elements div {
+  opacity: 1;
+}
+
+.about-tilt .tracker:hover ~ #card .card-particles span {
+  animation: aboutParticleFloat 2s infinite;
+}
+
+@keyframes aboutParticleFloat {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--x, 0) * 30px), calc(var(--y, 0) * 30px));
+    opacity: 0;
+  }
+}
+
+/* Particle positions */
+.about-tilt .card-particles span:nth-child(1) {
+  --x: 1;
+  --y: -1;
+  top: 40%;
+  left: 20%;
+}
+.about-tilt .card-particles span:nth-child(2) {
+  --x: -1;
+  --y: -1;
+  top: 60%;
+  right: 20%;
+}
+.about-tilt .card-particles span:nth-child(3) {
+  --x: 0.5;
+  --y: 1;
+  top: 20%;
+  left: 40%;
+}
+.about-tilt .card-particles span:nth-child(4) {
+  --x: -0.5;
+  --y: 1;
+  top: 80%;
+  right: 40%;
+}
+.about-tilt .card-particles span:nth-child(5) {
+  --x: 1;
+  --y: 0.5;
+  top: 30%;
+  left: 60%;
+}
+.about-tilt .card-particles span:nth-child(6) {
+  --x: -1;
+  --y: 0.5;
+  top: 70%;
+  right: 60%;
+}
+
+.about-tilt #card::before {
+  content: "";
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 170, 0.1) 0%,
+    rgba(0, 162, 255, 0.05) 50%,
+    transparent 100%
+  );
+  filter: blur(20px);
+  opacity: 0;
+  width: 150%;
+  height: 150%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+.about-tilt .tracker:hover ~ #card::before {
+  opacity: 1;
+}
+
+.about-tilt .tracker {
+  position: absolute;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+}
+
+.about-tilt .tracker:hover {
+  cursor: pointer;
+}
+
+.about-tilt .tracker:hover ~ #card #prompt {
+  opacity: 0;
+}
+
+.about-tilt .tracker:hover ~ #card {
+  transition: 300ms;
+  filter: brightness(1.1);
+}
+
+.about-tilt .container:hover #card::before {
+  transition: 200ms;
+  content: "";
+  opacity: 80%;
+}
+
+.about-tilt .canvas {
+  inset: 0;
+  z-index: 200;
+  position: absolute;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "tr-1 tr-2 tr-3 tr-4 tr-5"
+    "tr-6 tr-7 tr-8 tr-9 tr-10"
+    "tr-11 tr-12 tr-13 tr-14 tr-15"
+    "tr-16 tr-17 tr-18 tr-19 tr-20"
+    "tr-21 tr-22 tr-23 tr-24 tr-25";
+}
+
+.about-tilt .tr-1 {
+  grid-area: tr-1;
+}
+
+.about-tilt .tr-2 {
+  grid-area: tr-2;
+}
+
+.about-tilt .tr-3 {
+  grid-area: tr-3;
+}
+
+.about-tilt .tr-4 {
+  grid-area: tr-4;
+}
+
+.about-tilt .tr-5 {
+  grid-area: tr-5;
+}
+
+.about-tilt .tr-6 {
+  grid-area: tr-6;
+}
+
+.about-tilt .tr-7 {
+  grid-area: tr-7;
+}
+
+.about-tilt .tr-8 {
+  grid-area: tr-8;
+}
+
+.about-tilt .tr-9 {
+  grid-area: tr-9;
+}
+
+.about-tilt .tr-10 {
+  grid-area: tr-10;
+}
+
+.about-tilt .tr-11 {
+  grid-area: tr-11;
+}
+
+.about-tilt .tr-12 {
+  grid-area: tr-12;
+}
+
+.about-tilt .tr-13 {
+  grid-area: tr-13;
+}
+
+.about-tilt .tr-14 {
+  grid-area: tr-14;
+}
+
+.about-tilt .tr-15 {
+  grid-area: tr-15;
+}
+
+.about-tilt .tr-16 {
+  grid-area: tr-16;
+}
+
+.about-tilt .tr-17 {
+  grid-area: tr-17;
+}
+
+.about-tilt .tr-18 {
+  grid-area: tr-18;
+}
+
+.about-tilt .tr-19 {
+  grid-area: tr-19;
+}
+
+.about-tilt .tr-20 {
+  grid-area: tr-20;
+}
+
+.about-tilt .tr-21 {
+  grid-area: tr-21;
+}
+
+.about-tilt .tr-22 {
+  grid-area: tr-22;
+}
+
+.about-tilt .tr-23 {
+  grid-area: tr-23;
+}
+
+.about-tilt .tr-24 {
+  grid-area: tr-24;
+}
+
+.about-tilt .tr-25 {
+  grid-area: tr-25;
+}
+
+
+
+.about-tilt .noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.about-tilt .card-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.about-tilt .cyber-lines span {
+  position: absolute;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(92, 103, 255, 0.2),
+    transparent
+  );
+}
+
+.about-tilt .cyber-lines span:nth-child(1) {
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.about-tilt .cyber-lines span:nth-child(2) {
+  top: 40%;
+  right: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.about-tilt .cyber-lines span:nth-child(3) {
+  top: 60%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.about-tilt .cyber-lines span:nth-child(4) {
+  top: 80%;
+  right: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.about-tilt .container:hover .cyber-lines span:nth-child(1){animation:aboutLineGrow 3s linear infinite}
+.about-tilt .container:hover .cyber-lines span:nth-child(2){animation:aboutLineGrow 3s linear infinite 1s}
+.about-tilt .container:hover .cyber-lines span:nth-child(3){animation:aboutLineGrow 3s linear infinite 2s}
+.about-tilt .container:hover .cyber-lines span:nth-child(4){animation:aboutLineGrow 3s linear infinite 1.5s}
+
+.about-tilt .corner-elements span {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(92, 103, 255, 0.3);
+}
+
+.about-tilt .corner-elements span:nth-child(1) {
+  top: 10px;
+  left: 10px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.about-tilt .corner-elements span:nth-child(2) {
+  top: 10px;
+  right: 10px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.about-tilt .corner-elements span:nth-child(3) {
+  bottom: 10px;
+  left: 10px;
+  border-right: 0;
+  border-top: 0;
+}
+
+.about-tilt .corner-elements span:nth-child(4) {
+  bottom: 10px;
+  right: 10px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.about-tilt .scan-line {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(92, 103, 255, 0.1),
+    transparent
+  );
+  transform: translateY(-100%);
+}
+.about-tilt .container:hover .scan-line{animation:aboutScanMove 2s linear infinite}
+
+@keyframes aboutLineGrow {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes aboutScanMove {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.about-tilt #card:hover .card-glare {
+  opacity: 1;
+}
+
+.about-tilt .corner-elements span {
+  transition: all 0.3s ease;
+}
+
+.about-tilt #card:hover .corner-elements span {
+  border-color: rgba(92, 103, 255, 0.8);
+  box-shadow: 0 0 10px rgba(92, 103, 255, 0.5);
+}
+
+
+  /* About tilt card: larger size + About text layout (effect rules above are the supplied CSS, scoped) */
+  .about-tilt{display:flex;min-width:0;height:100%;align-items:stretch;justify-content:center}
+  .about-tilt .container{width:100%;max-width:none;height:100%;min-height:560px}
+  .about-tilt .container:active{width:100%;height:100%}
+  @media(max-width:820px){.about-tilt .container{min-height:640px}}
+  .about-tilt #prompt{top:26px;bottom:auto;margin:0}
+  .about-tilt .title{top:10px}
+  .about-tilt .about-body{position:relative;z-index:5;height:100%;padding:80px 26px 86px;display:flex;flex-direction:column;justify-content:center;color:#fff}
+  .about-tilt .about-body h3{font-family:"DM Serif Display",serif;font-weight:400;font-size:25px;line-height:1;margin:0 0 10px;text-align:center;color:#fff}
+  .about-tilt .about-body p{margin:0;color:rgba(255,255,255,.82);font-size:14.5px;line-height:1.65;text-align:center}
+  .about-tilt .bucket{margin-top:22px}
+  .about-tilt .bucket li{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14);color:#EDF1F7;font-size:13.5px}
+  .about-tilt .bucket li.done{opacity:.8}
+  .about-tilt .tracker{display:none}
+  .about-tilt #card{transform:none !important;filter:none}
+  .about-tilt #prompt{display:none}
+  .about-tilt .title{opacity:1;transform:none}
+  .about-tilt .scan-line,.about-tilt .cyber-lines span,.about-tilt .card-particles span{animation:none !important}
+  @media (prefers-reduced-motion: reduce){
+    .about-tilt .scan-line,.about-tilt .cyber-lines span{animation:none}
+    .about-tilt .container,.about-tilt #card,.about-tilt .title,.about-tilt #prompt,.about-tilt .glow-1,.about-tilt .glow-2,.about-tilt .glow-3,.about-tilt .card-particles span{transition:none}
+  }
+
+  /* Plain fixed navigation: solid dark pill with no glass, blur, shimmer or refraction. */
+  body.nav-open{overflow:hidden}
+  .top-nav,.top-nav.over-hero{position:fixed;z-index:72;top:20px;left:50%;transform:translateX(-50%);padding:4px 24px;color:#fff;background:#08100D;border:1px solid #26312D;border-radius:999px}
+  .top-nav-list{display:flex;align-items:center;justify-content:center;gap:32px;margin:0;padding:0;list-style:none}
+  .top-nav-link{position:relative;display:inline-flex;height:36px;align-items:center;color:#fff;font-size:14px;font-weight:500;line-height:1;text-decoration:none;white-space:nowrap}
+  .top-nav-link::before{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#E47A3F;transform:scaleX(0);transform-origin:center}
+  .top-nav-link:hover,.top-nav-link:focus-visible{color:#D6DDD9}
+  .top-nav-link[data-active="true"]::before{transform:scaleX(1)}
+  .top-nav-toggle{display:none}
+  #home,#highlights,#trips,#photo-book,#travel-tips,#about-me{scroll-margin-top:86px}
+  @media(max-width:860px){
+    .top-nav,.top-nav.over-hero,.top-nav:not(.over-hero){top:calc(8px + env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));width:auto;min-height:48px;padding:4px 8px;transform:none;color:#fff;background:#08100D;border:1px solid #26312D;border-radius:999px}
+    .top-nav-toggle{display:none}
+    .top-nav-list{width:100%;min-height:38px;display:flex;align-items:center;justify-content:flex-start;gap:12px;padding:0 3px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+    .top-nav-list::-webkit-scrollbar{display:none}
+    .top-nav-list li{flex:0 0 auto}
+    .top-nav-link{height:36px;padding:0 5px;font-size:12px;font-weight:600;justify-content:center;color:#fff}
+    .top-nav-link:hover,.top-nav-link:focus-visible{color:#D6DDD9}
+    .top-nav-link::before{left:50%;right:auto;bottom:3px;width:18px;height:2px;border-radius:999px;background:#E47A3F;transform:translateX(-50%) scaleX(0)}
+    .top-nav-link[data-active="true"]::before{transform:translateX(-50%) scaleX(1)}
+    .hero-top{top:calc(68px + env(safe-area-inset-top))}
+    #home,#highlights,#trips,#photo-book,#travel-tips,#about-me{scroll-margin-top:72px}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+  footer{padding:22px 0 32px;color:var(--muted);font-size:13px}
+  footer .foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px}
+  footer a{color:var(--ink);font-weight:600;text-decoration:none}
+  .foot-brand{display:inline-flex;align-items:center;gap:10px}
+  .foot-logo{height:52px;width:auto;border-radius:10px;border:1px solid var(--line)}
+
+  /* MOTION + EXTRAS */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:80;border-radius:0 3px 3px 0}
+  section[id]{scroll-margin-top:86px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .chip{transition:background .18s ease,color .18s ease,border-color .18s ease}
+  .btn-accent{background:var(--accent);color:#fff}
+  .btn-accent:hover{transform:translateY(-1px)}
+
+  /* Scroll reveal */
+  .js-anim [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,.61,.36,1);transition-delay:var(--d,0s)}
+  .js-anim [data-reveal].in{opacity:1;transform:none}
+
+  /* Scroll-scrubbed word reveal: opacity is written directly from scroll position so it
+     follows the reader in both directions instead of playing on its own. */
+  .scroll-word{opacity:var(--word-opacity,.18);will-change:opacity}
+
+  /* Gallery cards enter only when their row reaches the viewport. The delay is assigned
+     per visible batch in JavaScript, creating a restrained left-to-right stagger. */
+  .js-anim .card[data-card-enter]{opacity:.18;transform:translateY(24px);transition:opacity .72s ease,transform .72s cubic-bezier(.22,.61,.36,1);transition-delay:var(--card-delay,0ms)}
+  .js-anim .card[data-card-enter].card-entered{opacity:1;transform:translateY(0)}
+  .js-anim .card[data-card-enter].card-entered:hover{transform:translateY(-3px)}
+
+  /* Back to top */
+  .to-top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--bg);border:0;display:grid;place-items:center;font-size:18px;cursor:pointer;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease;z-index:40}
+  .to-top.show{opacity:1;pointer-events:auto;transform:none}
+
+  /* Lightbox navigation */
+  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:#fff;color:#111;display:grid;place-items:center;font-size:22px;line-height:1;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:2}
+  .lb-prev{left:10px}
+  .lb-next{right:10px}
+  .lb-play{position:absolute;left:12px;bottom:12px;height:36px;padding:0 14px;border-radius:999px;border:0;background:#fff;color:#111;font-size:13px;font-weight:700;display:none;align-items:center;gap:6px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:2}
+  .lb.open .lb-play{display:inline-flex}
+  .lb.open.video-active .lb-play{display:none}
+  .lb-video-ui{position:absolute;z-index:5;inset:0;display:none;pointer-events:none}
+  .lb-video-ui.show{display:block}
+  .lb-video-toggle{position:absolute;z-index:2;top:50%;left:50%;width:56px;height:56px;padding:0;border:1px solid rgba(255,255,255,.6);border-radius:50%;background:rgba(7,14,11,.72);color:#fff;display:grid;place-items:center;transform:translate(-50%,-50%);cursor:pointer;pointer-events:auto;box-shadow:0 10px 28px rgba(0,0,0,.34);backdrop-filter:blur(8px)}
+  .lb-video-toggle svg{width:22px;height:22px;fill:currentColor}
+  .lb-video-toggle .lb-video-play-icon{display:none;margin-left:2px}
+  .lb-video-toggle[data-paused="true"] .lb-video-play-icon{display:block}
+  .lb-video-toggle[data-paused="true"] .lb-video-pause-icon{display:none}
+  .lb-video-seek-wrap{position:absolute;z-index:1;left:14px;right:14px;bottom:12px;min-height:34px;padding:7px 10px;border:1px solid rgba(255,255,255,.34);border-radius:999px;background:rgba(7,14,11,.74);display:flex;align-items:center;pointer-events:auto;box-shadow:0 6px 18px rgba(0,0,0,.24);backdrop-filter:blur(8px)}
+  .lb-video-seek{width:100%;height:20px;margin:0;accent-color:#fff;cursor:pointer}
+  .lb-video-seek:disabled{opacity:.5;cursor:default}
+  .lb-sound{position:absolute;top:14px;left:14px;z-index:4;min-width:44px;min-height:44px;padding:0 13px;border:1px solid rgba(255,255,255,.5);border-radius:999px;background:rgba(8,16,13,.76);color:#fff;display:none;align-items:center;justify-content:center;gap:7px;font-size:12px;font-weight:700;line-height:1;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.28);backdrop-filter:blur(8px)}
+  .lb-sound.show{display:inline-flex}
+  .lb-sound svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+  .lb-sound .lb-sound-on-icon{display:none}
+  .lb-sound[aria-pressed="true"] .lb-sound-on-icon{display:block}
+  .lb-sound[aria-pressed="true"] .lb-sound-off-icon{display:none}
+  .lb-count{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,.62);color:#fff;font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:999px;z-index:2}
+  @media(max-width:760px){.lb-nav{width:36px;height:36px;font-size:19px}.lb-sound{top:12px;left:12px;min-width:44px;min-height:44px;padding:0 12px}.lb-close{top:12px;right:12px;width:44px;height:44px}}
+  @media(prefers-reduced-motion:reduce){.lb-sound{transition:none}}
+
+  @media (prefers-reduced-motion: reduce){
+    .js-anim [data-reveal]{opacity:1;transform:none;transition:none}
+    .scroll-word{opacity:1 !important;will-change:auto}
+    .js-anim .card[data-card-enter],.js-anim .card[data-card-enter].card-entered{opacity:1;transform:none;transition:none}
+    .card,.btn{transition:none}
+  }
+
+  /* LIGHTBOX */
+  .lb{position:fixed;inset:0;background:rgba(10,14,12,.82);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;z-index:120}
+  .lb.open{display:flex}
+  .lb-dialog{background:var(--surface);color:var(--ink);width:min(920px,100%);max-height:90vh;overflow:auto;border-radius:22px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1.15fr .85fr}
+  .lb-media-stage{position:relative;min-width:0;min-height:320px;overflow:hidden;background:#000}
+  @media(max-width:760px){.lb-dialog{grid-template-columns:1fr}.lb-media-stage{min-height:280px;height:280px}}
+  .lb-dialog .lb-media-stage>img{width:100%;height:100%;min-height:320px;object-fit:cover;background:#000}
+  .lb-dialog .lb-media-stage>video{width:100%;height:100%;min-height:320px;object-fit:cover;display:block;background:#000}
+  @media(max-width:760px){.lb-dialog .lb-media-stage>img,.lb-dialog .lb-media-stage>video{height:280px;min-height:unset}}
+  .lb-body{padding:22px}
+  .lb-body h3{font-family:"DM Serif Display",serif;font-weight:400;font-size:28px;line-height:1;margin:6px 0 8px}
+  .lb-body p{color:var(--muted);font-size:15px;line-height:1.65;margin:0}
+  .lb-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:#fff;color:#111;display:grid;place-items:center;font-size:18px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.2);z-index:2}
+  .lb-wrap{position:relative;width:min(920px,100%)}
+
+  /* Story photo gallery (thumbs inside the lightbox) */
+  .lb-thumbs{display:none;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .lb-thumbs.show{display:flex}
+  .lb-thumb{width:64px;height:48px;border-radius:10px;overflow:hidden;border:2px solid var(--line);padding:0;cursor:pointer;background:#202723;flex-shrink:0;transition:border-color .18s ease,transform .18s ease}
+  .lb-thumb:hover{transform:translateY(-1px)}
+  .lb-thumb.active{border-color:var(--accent)}
+  .lb-dialog .lb-thumb img{width:100%;height:100%;min-height:0;object-fit:cover}
+  .lb-thumb{position:relative}
+  .lb-dialog .lb-thumb video{width:100%;height:100%;min-height:0;object-fit:cover;display:block}
+  .lb-thumb-play{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:13px;background:rgba(0,0,0,.3);pointer-events:none}
+
+  /* Add-trip selected media thumbnails */
+
+  /* LIFE QUOTE — refined portfolio grid with a dedicated full-screen viewer */
+  .quote-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+  .quote-tile{position:relative;aspect-ratio:2/3;min-width:0;overflow:hidden;padding:0;border:1px solid var(--line);border-radius:18px;background:#121816;color:#fff;box-shadow:0 12px 30px rgba(28,35,32,.1);cursor:zoom-in;isolation:isolate;transition:transform .42s cubic-bezier(.22,.61,.36,1),box-shadow .42s ease,border-color .3s ease}
+  .quote-tile::after{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(180deg,transparent 58%,rgba(4,9,7,.78) 100%);pointer-events:none}
+  .quote-tile img,.quote-tile video{width:100%;height:100%;display:block;object-fit:cover;transition:transform .7s cubic-bezier(.22,.61,.36,1),filter .4s ease;background:#101512}
+  .quote-tile video{pointer-events:none}
+  .quote-tile-label{position:absolute;z-index:2;left:14px;right:14px;bottom:13px;display:flex;align-items:end;justify-content:space-between;gap:10px;text-align:left;font-family:"DM Serif Display",Georgia,serif;font-size:17px;line-height:1.05;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+  .quote-tile-label::after{content:"↗";display:grid;place-items:center;width:28px;height:28px;flex:0 0 auto;border:1px solid rgba(255,255,255,.48);border-radius:50%;font-family:"Outfit",sans-serif;font-size:13px;background:rgba(7,12,10,.34);backdrop-filter:blur(7px)}
+  .quote-video-mark{position:absolute;z-index:2;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid rgba(255,255,255,.4);border-radius:999px;background:rgba(7,12,10,.56);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(7px)}
+  .quote-tile:hover,.quote-tile:focus-visible{transform:translateY(-6px);border-color:color-mix(in srgb,var(--accent) 42%,var(--line));box-shadow:0 24px 48px rgba(28,35,32,.17);outline:none}
+  .quote-tile:hover img,.quote-tile:hover video,.quote-tile:focus-visible img,.quote-tile:focus-visible video{transform:scale(1.035);filter:brightness(1.035)}
+  @media(max-width:900px){.quote-gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+  @media(max-width:620px){
+    .quote-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .quote-tile{border-radius:14px;box-shadow:0 9px 22px rgba(28,35,32,.1)}
+    .quote-tile-label{left:10px;right:10px;bottom:10px;font-size:14px}
+    .quote-tile-label::after{width:24px;height:24px;font-size:11px}
+    .quote-video-mark{top:9px;left:9px;padding:5px 7px;font-size:8px}
+  }
+
+  .quote-lightbox{position:fixed;z-index:90;inset:0;display:grid;place-items:center;padding:0;background:#050706;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease,visibility 0s linear .28s}
+  .quote-lightbox.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .28s ease}
+  .quote-lightbox-dialog{position:relative;width:100%;height:100vh;height:100dvh;min-width:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;background:#050706;color:#fff;transform:translateY(16px) scale(.985);transition:transform .36s cubic-bezier(.22,.61,.36,1)}
+  .quote-lightbox.open .quote-lightbox-dialog{transform:none}
+  .quote-lb-top{min-height:62px;padding:16px max(68px,env(safe-area-inset-right)) 14px max(20px,env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .quote-lb-title{margin:0;font-family:"DM Serif Display",Georgia,serif;font-size:22px;font-weight:400;line-height:1.05}
+  .quote-lb-count{color:rgba(255,255,255,.62);font-size:11px;font-weight:700;letter-spacing:.12em;white-space:nowrap}
+  .quote-lb-media{position:relative;min-width:0;min-height:0;overflow:hidden;background:#050706}
+  .quote-lb-media img{position:absolute;inset:0;width:100%;height:100%;max-width:100%;max-height:100%;display:block;object-fit:cover;object-position:center;background:#050706}
+  .quote-lb-media video{position:absolute;inset:0;width:100%;height:100%;max-width:100%;max-height:100%;display:block;object-fit:contain;object-position:center;background:#050706}
+  .quote-lb-media video{outline:none}
+  .quote-lb-note{margin:0;padding:11px 68px;text-align:center;color:rgba(255,255,255,.58);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-top:1px solid rgba(255,255,255,.08)}
+  .quote-lb-close,.quote-lb-nav{border:1px solid rgba(255,255,255,.26);background:rgba(13,19,16,.72);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(9px);transition:background .2s ease,border-color .2s ease,transform .2s ease}
+  .quote-lb-close{position:absolute;z-index:4;top:12px;right:12px;width:38px;height:38px;border-radius:50%;font-size:16px}
+  .quote-lb-nav{position:absolute;z-index:4;top:50%;width:44px;height:44px;margin-top:-22px;border-radius:50%;font-size:24px;line-height:1}
+  .quote-lb-prev{left:14px}.quote-lb-next{right:14px}
+  .quote-lb-close:hover,.quote-lb-close:focus-visible,.quote-lb-nav:hover,.quote-lb-nav:focus-visible{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.65);transform:scale(1.04);outline:none}
+  @media(max-width:620px){
+    .quote-lb-top{min-height:56px;padding:calc(12px + env(safe-area-inset-top)) 58px 12px max(14px,env(safe-area-inset-left))}
+    .quote-lb-title{font-size:18px}
+    .quote-lb-nav{top:auto;bottom:10px;width:38px;height:38px;margin:0;font-size:21px}
+    .quote-lb-prev{left:max(12px,env(safe-area-inset-left))}.quote-lb-next{right:max(12px,env(safe-area-inset-right))}
+    .quote-lb-note{min-height:58px;padding:15px 54px calc(15px + env(safe-area-inset-bottom));font-size:9px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .quote-tile,.quote-tile img,.quote-tile video,.quote-lightbox,.quote-lightbox-dialog,.quote-lb-close,.quote-lb-nav{transition:none}
+    .quote-tile:hover,.quote-tile:focus-visible,.quote-lb-close:hover,.quote-lb-close:focus-visible,.quote-lb-nav:hover,.quote-lb-nav:focus-visible{transform:none}
+  }
+
+  /* ===== OCT 6 LOOK ===== */
+  /* Nav floats transparent over the hero; the dark pill returns once you scroll past it. */
+  .top-nav{transition:background .35s ease,border-color .35s ease,box-shadow .35s ease}
+  .top-nav.over-hero{background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .top-nav.over-hero .top-nav-link{text-shadow:0 1px 12px rgba(4,10,8,.65)}
+  @media(max-width:860px){
+    .top-nav.over-hero{background:rgba(8,16,13,.55);border-color:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    .top-nav.over-hero .top-nav-link{text-shadow:none}
+  }
+
+  /* Gallery cards filled their frames edge-to-edge in this era. */
+  .card-media img,.card-media video{object-fit:cover}
+
+  /* Anchor jumps land clear of the fixed nav and the sticky filter bar. */
+  #highlights,#trips,#photo-book,#travel-tips,#about-me{scroll-margin-top:148px}
+
+  /* 3D tilt targets (JS drives the transform; reduced-motion and touch are skipped there). */
+  .brand-3d{will-change:transform}
+  .tilt3d{display:inline-block;will-change:transform}
+
+  /* Life quote: the five videos on the dark Works Wheel-era stage. */
+  .quote-stage{background:radial-gradient(120% 90% at 50% 0%,#182420 0%,#0A0F0D 58%);border:1px solid #22302A;border-radius:26px;padding:30px 30px 24px;box-shadow:0 30px 60px rgba(10,18,15,.28)}
+  .quote-stage .quote-gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+  .quote-stage .quote-tile{flex:0 1 calc((100% - 40px)/3);border-color:rgba(255,255,255,.14);box-shadow:0 16px 34px rgba(0,0,0,.35)}
+  .quote-stage-caption{margin:22px 0 2px;text-align:center;color:rgba(255,255,255,.5);font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase}
+  @media(max-width:620px){
+    .quote-stage{padding:16px 14px;border-radius:20px}
+    .quote-stage .quote-gallery{gap:12px}
+    .quote-stage .quote-tile{flex-basis:calc((100% - 12px)/2)}
+    .quote-stage-caption{margin-top:16px;font-size:10px}
+  }
+
+</style>
+<script>document.documentElement.classList.add('js-anim');</script>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<nav class="top-nav over-hero" id="topNav" aria-label="Primary navigation">
+  <button class="top-nav-toggle" id="topNavToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="topNavList"><span aria-hidden="true"></span></button>
+  <ul class="top-nav-list" id="topNavList">
+    <li><a class="top-nav-link" href="#home" data-nav-target="home" data-active="true" aria-current="page">Home</a></li>
+    <li><a class="top-nav-link" href="#highlights" data-nav-target="highlights">Highlights</a></li>
+    <li><a class="top-nav-link" href="#trips" data-nav-target="trips">Gallery</a></li>
+    <li><a class="top-nav-link" href="#photo-book" data-nav-target="photo-book">Life quote</a></li>
+    <li><a class="top-nav-link" href="#travel-tips" data-nav-target="travel-tips">Travel tips</a></li>
+    <li><a class="top-nav-link" href="#about-me" data-nav-target="about-me">About me</a></li>
+  </ul>
+</nav>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div class="hero-card" aria-label="Travel for love hero — golden-hour ride video">
+      <div class="hero-slides" aria-live="off">
+        <video class="hero-slide is-video ride-video active" poster="assets/asset-002.jpg" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-label="Golden-hour motorcycle ride on a wet road"><source src="assets/asset-003.mp4" type="video/mp4"><source src="assets/asset-004.mp4" type="video/mp4"></video>
+        <span class="ride-frame-glow" aria-hidden="true"></span>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-top">
+        <img class="brand-logo" src="assets/asset-005.png" alt="Travel for love logo" />
+        <button class="ride-sound-toggle" type="button" aria-label="Turn sound on for the motorcycle ride video" aria-pressed="false">
+          <svg class="sound-off-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="m16 9 5 6"></path><path d="m21 9-5 6"></path></svg>
+          <svg class="sound-on-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18 6a8.5 8.5 0 0 1 0 12"></path></svg>
+          <span>Sound on</span>
+        </button>
+      </div>
+      <div class="hero-content">
+        <h1 class="brand-3d"><span class="hl">Travel</span> <span class="hl">for <em>love.</em></span></h1>
+        <p class="lead quote-lead" data-reveal><span class="quote-line">“A traveller without observation is a bird without wings.”</span><span class="quote-follow">I am always on the move, discovering new destinations and capturing their beauty through my lens</span></p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#trips">Explore trips ↓</a>
+          <a class="btn btn-ghost" href="https://www.instagram.com/in_finite_killer?stkn=MTIxbDdra3hvejBvYQ%3D%3D&utm_source=qr" target="_blank" rel="noopener">Follow on Instagram ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile" aria-label="About Swasthik">
+      <div class="avatar" aria-hidden="true">S</div>
+      <div class="profile-main">
+        <strong>Swasthik</strong>
+        <span>Bike rides, hill stations & hidden waterfalls • Follow me for more — @_in_finite_killer_ • Swasthiknaik1234@gmail.com</span>
+      </div>
+      <div class="stats" aria-label="Blog overview">
+        <div class="stat"><b data-count="8">8</b><label>Stories</label></div>
+        <div class="stat"><b data-count="8">8</b><label>Photos</label></div>
+        <div class="stat"><b>Love</b><label>To ride →</label></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ON THE ROAD HIGHLIGHTS -->
+  <section class="section" id="highlights" aria-labelledby="road-title">
+    <div class="section-head">
+      <div>
+        <h2 id="road-title" class="tilt3d">On the road — highlights</h2>
+        <p>Frames from the rides, always moving. Tap any frame to open its story.</p>
+      </div>
+    </div>
+    <div class="road-strip">
+      <div class="road-track">
+        <div class="road-set">
+          <button class="road-frame" type="button" data-open="munnar" aria-label="Open the Munnar hills story"><img src="assets/asset-006.jpg" alt="Tea plantations in the Munnar hills" loading="lazy" /><span class="cap">Munnar hills</span></button>
+          <button class="road-frame" type="button" data-open="neelakurinji" aria-label="Open the Neelakurinji Flower story"><img src="assets/asset-007.jpg" alt="Neelakurinji flowers in full bloom on a misty Western Ghats hillside" loading="lazy" /><span class="cap">Neelakurinji</span></button>
+          <button class="road-frame" type="button" data-open="mallalli" aria-label="Open the Mallalli Falls story"><video src="assets/asset-008.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video from Mallalli Falls (view from kote betta)"></video><span class="cap">Mallalli Falls</span></button>
+          <button class="road-frame" type="button" data-open="kolukkumalai" aria-label="Open the Kolukkumalai Peak story"><video src="assets/asset-009.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video from Kolukkumalai Peak"></video><span class="cap">Kolukkumalai</span></button>
+          <button class="road-frame" type="button" data-open="guna" aria-label="Open the Guna Caves, Kodaikanal story"><img src="assets/asset-010.jpg" alt="Stone arch entrance at Guna Caves, Kodaikanal" loading="lazy" /><span class="cap">Guna Caves</span></button>
+          <button class="road-frame" type="button" data-open="dolphin" aria-label="Open the Vattakanal Dolphin Nose Point story"><video src="assets/asset-011.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video from the Vattakanal Dolphin Nose Point trek"></video><span class="cap">Dolphin Nose Point</span></button>
+        </div>
+        <div class="road-set" aria-hidden="true">
+          <button class="road-frame" type="button" tabindex="-1" data-open="munnar" aria-label="Open the Munnar hills story"><img src="assets/asset-006.jpg" alt="" loading="lazy" /><span class="cap">Munnar hills</span></button>
+          <button class="road-frame" type="button" tabindex="-1" data-open="neelakurinji" aria-label="Open the Neelakurinji Flower story"><img src="assets/asset-007.jpg" alt="" loading="lazy" /><span class="cap">Neelakurinji</span></button>
+          <button class="road-frame" type="button" tabindex="-1" data-open="mallalli" aria-label="Open the Mallalli Falls story"><video src="assets/asset-008.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="cap">Mallalli Falls</span></button>
+          <button class="road-frame" type="button" tabindex="-1" data-open="kolukkumalai" aria-label="Open the Kolukkumalai Peak story"><video src="assets/asset-009.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="cap">Kolukkumalai</span></button>
+          <button class="road-frame" type="button" tabindex="-1" data-open="guna" aria-label="Open the Guna Caves, Kodaikanal story"><img src="assets/asset-010.jpg" alt="" loading="lazy" /><span class="cap">Guna Caves</span></button>
+          <button class="road-frame" type="button" tabindex="-1" data-open="dolphin" aria-label="Open the Vattakanal Dolphin Nose Point story"><video src="assets/asset-011.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video><span class="cap">Dolphin Nose Point</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER -->
+  <div class="filterbar" role="search">
+    <label class="search">
+      <span aria-hidden="true">⌕</span>
+      <input id="searchInput" type="search" placeholder="Search places, e.g. Munnar, falls…" autocomplete="off" />
+    </label>
+    <div class="chips" id="chips">
+      <button class="chip active" data-filter="all">All trips</button>
+      <button class="chip" data-filter="hills">Hills</button>
+      <button class="chip" data-filter="nature">Nature</button>
+      <button class="chip" data-filter="falls">Falls</button>
+    </div>
+  </div>
+
+  <!-- FEATURED -->
+  <section class="section" aria-labelledby="featured-title">
+    <div class="section-head">
+      <div>
+        <h2 id="featured-title">Featured story</h2>
+        <p>The ride I keep coming back to — tea gardens, mist and friends.</p>
+      </div>
+      <a class="link" href="#trips">See all trips →</a>
+    </div>
+
+    <article class="featured" data-open="munnar" tabindex="0" role="button" aria-label="Open The Munnar hills story">
+      <div class="featured-media">
+        <video src="assets/asset-012.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Waterfall video from The Munnar hills"></video>
+        <span class="badge">Editor's pick</span>
+      </div>
+      <div class="featured-body">
+        <div class="meta">Munnar, Kerala</div>
+        <h3>The Munnar hills</h3>
+        <p>Munnar, in Kerala's Idukki district, is one of India's most iconic hill stations — 1,600m above sea level and wrapped in sprawling tea plantations. Personally, I loved this place very much when I went on a ride with my friends.</p>
+        <div class="facts">
+          <div class="fact"><b>Elevation</b><span>1,600 m</span></div>
+          <div class="fact"><b>Known for</b><span>Tea plantations</span></div>
+          <div class="fact"><b>Trip</b><span>Ride with friends</span></div>
+        </div>
+        <button class="btn" data-open="munnar">Read the story →</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- GALLERY / TRIPS -->
+  <section class="section" id="trips" aria-labelledby="trips-title">
+    <div class="section-head">
+      <div>
+        <h2 id="trips-title">Gallery — Places I've been</h2>
+        <p>From my Travel for love rides — tap any card to see the photo up close and read the story.</p>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <span class="link" id="resultCount">8 trips</span>
+        <button class="btn btn-accent" id="playShow" type="button" style="padding:9px 14px;font-size:13.5px">▶ Play slideshow</button>
+      </div>
+    </div>
+
+    <div class="grid" id="grid">
+      <article class="card" data-id="maidadi" data-region="hills nature" data-tags="hills nature maidadi kalasa chikkamagaluru clouds sunset viewpoint western ghats" tabindex="0">
+        <div class="card-media">
+          <video src="assets/asset-013.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video from Maidadi view point, Kalasa"></video>
+          <span class="tag">Hills</span>
+          <button class="heart like-star-btn" aria-label="Save Maidadi view point" data-like="maidadi"><span class="heart-glyph">♡</span><svg class="star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg></button>
+        </div>
+        <div class="card-body">
+          <div class="loc">Kalasa, Chikkamagaluru district</div>
+          <h3>Maidadi view point</h3>
+          <p>Maidadi Viewpoint is a hidden Western Ghats gem where cars and bikes can drive straight to the summit for effortless views of a dramatic sea of clouds. We ended up visiting this stunning peak on an unplanned trip with friends, catching an unforgettable sunset.</p>
+          <div class="card-foot"><span>29 Sept 2026</span><strong>Read →</strong></div>
+        </div>
+      </article>
+
+      <article class="card" data-id="munnar" data-region="hills nature" data-tags="hills nature tea kerala ride" tabindex="0">
+        <div class="card-media">
+          <video src="assets/asset-012.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video from The Munnar hills"></video>
+          <span class="tag">Hills</span>
+          <button class="heart like-star-btn" aria-label="Save The Munnar hills" data-like="munnar"><span class="heart-glyph">♡</span><svg class="star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg></button>
+        </div>
+        <div class="card-body">
+          <div class="loc">Munnar, Kerala</div>
+          <h3>The Munnar hills</h3>
+          <p>Munnar, in Kerala's Idukki district, is one of India's most iconic hill stations — 1,600m above sea level and wrapped in sprawling tea plantations. Personally, I loved this place very much when I went on a ride with my friends.</p>
+          <div class="card-foot"><span>Ride with friends</span><strong>Read →</strong></div>
+        </div>
+      </article>
+
+      <article class="card" data-id="neelakurinji" data-region="nature hills" data-tags="nature flower western ghats shola hills" tabindex="0">
+        <div class="card-media">
+          <img src="assets/asset-014.jpg" alt="Standing among blooming Neelakurinji flowers at Kote betta, Kodagu" loading="lazy" />
+          <span class="tag">Nature</span>
+          <button class="heart like-star-btn" aria-label="Save Neelakurinji Flower" data-like="neelakurinji"><span class="heart-glyph">♡</span><svg class="star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg></button>
+        </div>
+        <div class="card-body">
+          <div class="loc">Kote betta, Kodagu district</div>
+          <h3>Neelakurinji Flower</h3>
+          <p>Neelakurinji blooms once every 12 years in the Shola forests of the Western Ghats — a rare, fleeting reminder that even amid life's chaos, the world stays beautiful.</p>
+          <div class="card-foot"><span>Once in 12 years</span><strong>Read →</strong></div>
+        </div>
+      </article>
+
+      <article class="card" data-id="mallalli" data-region="falls nature" data-tags="falls waterfall kote betta nature" tabindex="0">
+        <div class="card-media">
+          <video src="assets/asset-008.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video from Mallalli Falls (view from kote betta)"></video>
+          <span class="tag">Falls</span>
+          <button class="heart like-star-btn" aria-label="Save Mallalli Falls (view from kote betta)" data-like="mallalli"><span class="heart-glyph">♡</span><svg class="star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg></button>
+        </div>
+        <div class="card-body">
+          <div class="loc">Mallalli Falls</div>
+          <h3>Mallalli Falls (view from kote betta)</h3>
+          <p>Mallalli Falls (view from kote betta) — a viewpoint stop on the ride through Coorg's green hills.</p>
+          <div class="card-foot"><span>Kote Betta view</span><strong>Read →</strong></div>
+        </div>
+      </article>
+
+      <article class="card" data-id="kolukkumalai" data-region="hills nature" data-tags="hills tea kolukkumalai sunrise jeep nature" tabindex="0">
+        <div class="card-media">
+          <video src="assets/asset-009.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video from Kolukkumalai Peak"></video>
+          <span class="tag">Hills</span>
+          <button class="heart like-star-btn" aria-label="Save Kolukkumalai Peak" data-like="kolukkumalai"><span class="heart-glyph">♡</span><svg class="star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg></button>
+        </div>
+        <div class="card-body">
+          <div class="loc">Idukki district in Kerala</div>
+          <h3>Kolukkumalai Peak</h3>
+          <p>Best visited November to May; misty and low-visibility during the August–October monsoon. Go early for the clearest views — we woke up at 3 o'clock. A jeep ride (about an hour each way) gets you there; plan 3–4 hours total, or stay overnight to catch sunrise and sunset over the tea gardens, as we did.</p>
+          <div class="card-foot"><span>Nov–May • 3 AM start</span><strong>Read →</strong></div>
+        </div>
+      </article>
+
+      <article class="card" data-id="guna" data-region="nature hills" data-tags="guna caves kodaikanal devil kitchen hills" tabindex="0">
+        <div class="card-media">
+          <img src="assets/asset-010.jpg" alt="Stone arch entrance at Guna Caves, Kodaikanal" style="object-position:center 62%" />
+          <span class="tag">Nature</span>
+          <button class="heart like-star-btn" aria-label="Save Guna Caves, Kodaikanal" data-like="guna"><span class="heart-glyph">♡</span><svg class="star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg></button>
+        </div>
+        <div class="card-body">
+          <div class="loc">Guna Caves, Kodaikanal</div>
+          <h3>Guna Caves, Kodaikanal</h3>
+          <p>Originally called Devil's Kitchen, Guna Caves became a popular sightseeing spot after featuring in Kamal Haasan's 1991 film Guna. The caves are fenced off for safety and only viewable from a distance. Timing: 8 AM–4 PM | Entry: ₹10 (₹20 for camera).</p>
+          <div class="card-foot"><span>8 AM–4 PM • ₹10</span><strong>Read →</strong></div>
+        </div>
+      </article>
+
+      <article class="card" data-id="dolphin" data-region="hills nature" data-tags="dolphin nose vattakanal kodaikanal trek hills nature" tabindex="0">
+        <div class="card-media">
+          <video src="assets/asset-011.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video from the Vattakanal Dolphin Nose Point trek"></video>
+          <span class="tag">Hills</span>
+          <button class="heart like-star-btn" aria-label="Save Vattakanal Dolphin Nose Point" data-like="dolphin"><span class="heart-glyph">♡</span><svg class="star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg></button>
+        </div>
+        <div class="card-body">
+          <div class="loc">Vattakanal, Kodaikanal</div>
+          <h3>Vattakanal Dolphin Nose Point</h3>
+          <p>Dolphin Nose Point is 8 km off from Kodaikanal Lake. On the way you can enjoy Liril Falls and Vattakanal Waterfalls. No entrance or parking fees. Reaching this spot requires a moderate 3 km trek through the pines and rocks of the Palani Hill Range.</p>
+          <div class="card-foot"><span>8 km • 3 km trek</span><strong>Read →</strong></div>
+        </div>
+      </article>
+
+      <article class="card" data-id="dhanushkodi" data-region="nature" data-tags="dhanushkodi coast beach tamil nadu nature sea sandbar" tabindex="0">
+        <div class="card-media">
+          <video src="assets/asset-015.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Aerial drone video over the Dhanushkodi land's-end point and the Ashoka pillar roundabout"></video>
+          <span class="tag">Nature</span>
+          <button class="heart like-star-btn" aria-label="Save Dhanushkodi" data-like="dhanushkodi"><span class="heart-glyph">♡</span><svg class="star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg><svg class="star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53" aria-hidden="true" focusable="false"><path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.99,29.37 371.16,197.68 392.05,407.78 20.9,-210.08 184.06,-378.41 392.05,-407.78 -207.99,-29.37 -371.16,-197.68 -392.05,-407.78z"/></svg></button>
+        </div>
+        <div class="card-body">
+          <div class="loc">Dhanushkodi, Tamil Nadu coast</div>
+          <h3>Dhanushkodi</h3>
+          <p>Dhanushkodi is a unique Tamil Nadu coastal town known for its striking geography and haunting history. Left largely uninhabited after a 1964 cyclone, modern infrastructure upgrades have transformed it into an iconic destination. A July 9, 2023 road trip with friends captured unforgettable images of historic ruins and local shops.</p>
+          <div class="card-foot"><span>Edge of India</span><strong>Read →</strong></div>
+        </div>
+      </article>
+
+      <div class="empty" id="emptyState" style="display:none">No trips match that search yet. Try “Munnar”, or clear the filter.</div>
+    </div>
+    <p style="margin:14px 2px 0;color:var(--muted);font-size:13.5px">Photos and stories from Travel for love — follow @_in_finite_killer_ for the reels.</p>
+  </section>
+
+  <!-- LIFE QUOTE — VIDEO-ONLY COLLECTION ON THE DARK STAGE -->
+  <section class="section" id="photo-book" aria-labelledby="book-section-title">
+    <div class="section-head">
+      <div>
+        <h2 id="book-section-title">Life quote</h2>
+        <p class="section-quote-line">&ldquo;Me going back to my red flag era since green flag is taken for granted&rdquo;</p>
+      </div>
+    </div>
+    <div class="quote-stage">
+      <div class="quote-gallery" id="quoteGallery" aria-label="Life quote video gallery">
+        <button class="quote-tile" type="button" data-quote-index="1" data-type="video" data-src="assets/asset-016.mp4" data-poster="assets/asset-017.jpg" data-title="Love Without Effort" data-alt="Book quote clip — a hand holding Until Love Sets Us Apart at night above an open page: 'People who always say they love you but never fix what hurts you — they don't love you, they love the comfort of having you. Love without effort is just an illusion.' Caption: This is the best line I read so far" aria-label="Play Love Without Effort in the full-screen viewer"><video src="assets/asset-016.mp4" poster="assets/asset-017.jpg" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><span class="quote-video-mark" aria-hidden="true">▶ Video</span><span class="quote-tile-label">Love Without Effort</span></button>
+        <button class="quote-tile" type="button" data-quote-index="2" data-type="video" data-src="assets/asset-018.mp4" data-poster="assets/asset-019.jpg" data-title="How Beautiful Love Can Be" data-alt="Silhouette clip — I once liked a girl so much that I couldn't look at her in a lustful way. That's when I realised how beautiful love can really be." aria-label="Play How Beautiful Love Can Be in the full-screen viewer"><video src="assets/asset-018.mp4" poster="assets/asset-019.jpg" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><span class="quote-video-mark" aria-hidden="true">▶ Video</span><span class="quote-tile-label">How Beautiful Love Can Be</span></button>
+        <button class="quote-tile" type="button" data-quote-index="3" data-type="video" data-src="assets/asset-020.mp4" data-poster="assets/asset-021.jpg" data-title="The Way We Ended" data-alt="Bike ride clip — I will always regret the way we ended, but I'll never forget how special our beginning was" aria-label="Play The Way We Ended in the full-screen viewer"><video src="assets/asset-020.mp4" poster="assets/asset-021.jpg" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><span class="quote-video-mark" aria-hidden="true">▶ Video</span><span class="quote-tile-label">The Way We Ended</span></button>
+        <button class="quote-tile" type="button" data-quote-index="4" data-type="video" data-src="assets/asset-022.mp4" data-poster="assets/asset-023.jpg" data-title="Miss Those Girls" data-alt="Night road clip — You miss your ex? I miss those girls I ignored for her...!!!" aria-label="Play Miss Those Girls in the full-screen viewer"><video src="assets/asset-022.mp4" poster="assets/asset-023.jpg" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><span class="quote-video-mark" aria-hidden="true">▶ Video</span><span class="quote-tile-label">Miss Those Girls</span></button>
+        <button class="quote-tile" type="button" data-quote-index="5" data-type="video" data-src="assets/asset-024.mp4" data-poster="assets/asset-025.jpg" data-title="Label You as Toxic" data-alt="Parking garage clip — When Bitches can't Manipulate you, they label you as Toxic" aria-label="Play Label You as Toxic in the full-screen viewer"><video src="assets/asset-024.mp4" poster="assets/asset-025.jpg" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><span class="quote-video-mark" aria-hidden="true">▶ Video</span><span class="quote-tile-label">Label You as Toxic</span></button>
+        <button class="quote-tile" type="button" data-quote-index="6" data-type="video" data-src="assets/asset-026.mp4" data-poster="assets/asset-027.jpg" data-title="Perfect Linee" data-alt="Perfect Linee comedy clip" aria-label="Play Perfect Linee in the full-screen viewer"><video src="assets/asset-026.mp4" poster="assets/asset-027.jpg" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><span class="quote-video-mark" aria-hidden="true">▶ Video</span><span class="quote-tile-label">Perfect Linee</span></button>
+        <button class="quote-tile" type="button" data-quote-index="7" data-type="video" data-src="assets/asset-028.mp4" data-poster="assets/asset-029.jpg" data-title="Playboy Allegations" data-alt="Party clip — Playboy allegations are my favourite compliments" aria-label="Play Playboy Allegations in the full-screen viewer"><video src="assets/asset-028.mp4" poster="assets/asset-029.jpg" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><span class="quote-video-mark" aria-hidden="true">▶ Video</span><span class="quote-tile-label">Playboy Allegations</span></button>
+        <button class="quote-tile" type="button" data-quote-index="8" data-type="video" data-src="assets/asset-030.mp4" data-poster="assets/asset-031.jpg" data-title="In The End" data-alt="Night drive clip — In the end, I'll see you with someone else and you'll see me with everything I once said I'd have" aria-label="Play In The End in the full-screen viewer"><video src="assets/asset-030.mp4" poster="assets/asset-031.jpg" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><span class="quote-video-mark" aria-hidden="true">▶ Video</span><span class="quote-tile-label">In The End</span></button>
+      </div>
+      <p class="quote-stage-caption" aria-hidden="true">A moving collection</p>
+    </div>
+  </section>
+
+
+
+  <!-- JOURNAL + ABOUT -->
+  <section class="section two">
+    <div class="panel" id="travel-tips">
+      <h3 class="tilt3d">Travel tips from the road</h3>
+      <p>Useful notes from Kolukkumalai and Kodaikanal rides.</p>
+      <ul class="notes">
+        <li><b>1</b><div><strong>Kolukkumalai: start at 3 AM</strong><span>Best Nov–May. Jeep ~1 hr each way, plan 3–4 hrs, or stay overnight for sunrise &amp; sunset.</span></div></li>
+        <li><b>2</b><div><strong>Guna Caves: 8 AM–4 PM</strong><span>Entry ₹10 (₹20 camera). Fenced off for safety — view from a distance.</span></div></li>
+        <li><b>3</b><div><strong>Dolphin Nose: allow for the trek</strong><span>About 3 km through pines and rocks. No entry or parking fees; Liril Falls and Vattakanal Waterfalls are on the way.</span></div></li>
+        <li><b>4</b><div><strong>Kodaikanal Lake: 8 km away</strong><span>Dolphin Nose Point is around 8 km from the lake — plan the lake stop before or after the trek.</span></div></li>
+      </ul>
+      <div class="travel-contact-row">
+        <div class="location-map" id="locationMap" role="button" tabindex="0" aria-expanded="false" aria-label="Ujire, Karnataka map. Click to expand">
+          <div class="location-map-card">
+            <div class="location-map-map" aria-hidden="true">
+              <svg viewBox="0 0 360 280" preserveAspectRatio="none">
+                <line class="map-road main" pathLength="1" x1="0" y1="98" x2="360" y2="98" style="--road-delay:.2s" />
+                <line class="map-road main" pathLength="1" x1="0" y1="182" x2="360" y2="182" style="--road-delay:.3s" />
+                <line class="map-road vertical" pathLength="1" x1="108" y1="0" x2="108" y2="280" style="--road-delay:.4s" />
+                <line class="map-road vertical" pathLength="1" x1="252" y1="0" x2="252" y2="280" style="--road-delay:.5s" />
+                <line class="map-road secondary" pathLength="1" x1="0" y1="56" x2="360" y2="56" style="--road-delay:.6s" />
+                <line class="map-road secondary" pathLength="1" x1="0" y1="140" x2="360" y2="140" style="--road-delay:.7s" />
+                <line class="map-road secondary" pathLength="1" x1="0" y1="224" x2="360" y2="224" style="--road-delay:.8s" />
+                <line class="map-road secondary" pathLength="1" x1="54" y1="0" x2="54" y2="280" style="--road-delay:.7s" />
+                <line class="map-road secondary" pathLength="1" x1="162" y1="0" x2="162" y2="280" style="--road-delay:.8s" />
+                <line class="map-road secondary" pathLength="1" x1="198" y1="0" x2="198" y2="280" style="--road-delay:.9s" />
+                <line class="map-road secondary" pathLength="1" x1="306" y1="0" x2="306" y2="280" style="--road-delay:1s" />
+              </svg>
+              <span class="map-building b1"></span><span class="map-building b2"></span><span class="map-building b3"></span>
+              <span class="map-building b4"></span><span class="map-building b5"></span><span class="map-building b6"></span>
+              <svg class="map-pin" viewBox="0 0 24 24"><path fill="#34d399" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/><circle cx="12" cy="9" r="2.5" fill="#16201c"/></svg>
+            </div>
+            <svg class="location-map-grid" width="100%" height="100%" aria-hidden="true"><defs><pattern id="location-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="currentColor" stroke-width=".5"/></pattern></defs><rect width="100%" height="100%" fill="url(#location-grid)"/></svg>
+            <div class="location-map-content">
+              <div class="location-map-top">
+                <svg class="location-map-fold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                <span class="location-map-live"><i></i>Live</span>
+              </div>
+              <div class="location-map-bottom">
+                <h4 class="location-map-name">Ujire, Karnataka</h4>
+                <p class="location-map-coordinates">13.01° N, 75.33° E</p>
+                <div class="location-map-underline"></div>
+              </div>
+            </div>
+          </div>
+          <p class="location-map-hint">Click to expand</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-tilt" id="about-me">
+      <div class="container noselect">
+        <div class="canvas">
+          <div class="tracker tr-1"></div>
+          <div class="tracker tr-2"></div>
+          <div class="tracker tr-3"></div>
+          <div class="tracker tr-4"></div>
+          <div class="tracker tr-5"></div>
+          <div class="tracker tr-6"></div>
+          <div class="tracker tr-7"></div>
+          <div class="tracker tr-8"></div>
+          <div class="tracker tr-9"></div>
+          <div class="tracker tr-10"></div>
+          <div class="tracker tr-11"></div>
+          <div class="tracker tr-12"></div>
+          <div class="tracker tr-13"></div>
+          <div class="tracker tr-14"></div>
+          <div class="tracker tr-15"></div>
+          <div class="tracker tr-16"></div>
+          <div class="tracker tr-17"></div>
+          <div class="tracker tr-18"></div>
+          <div class="tracker tr-19"></div>
+          <div class="tracker tr-20"></div>
+          <div class="tracker tr-21"></div>
+          <div class="tracker tr-22"></div>
+          <div class="tracker tr-23"></div>
+          <div class="tracker tr-24"></div>
+          <div class="tracker tr-25"></div>
+          <div id="card">
+            <div class="card-content">
+              <div class="card-glare"></div>
+              <div class="cyber-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <p id="prompt">HOVER ME</p>
+              <div class="title">SWASTHIK</div>
+              <div class="glowing-elements">
+                <div class="glow-1"></div>
+                <div class="glow-2"></div>
+                <div class="glow-3"></div>
+              </div>
+              <div class="about-body">
+                <h3>About Swasthik</h3>
+                <p>Join me on my adventures! I am always on the move, discovering new destinations and capturing their beauty through my lens. If you're looking to be inspired and follow along on my journeys, then you've come to the right place. Contact: Swasthiknaik1234@gmail.com • Instagram: _in_finite_killer_</p>
+                <ul class="bucket" aria-label="Places covered">
+                  <li class="done">Munnar hills, Kerala</li>
+                  <li class="done">Kolukkumalai Tea Estate</li>
+                  <li>Guna Caves &amp; Dolphin Nose, Kodaikanal</li>
+                </ul>
+              </div>
+              <div class="subtitle">TRAVEL <span class="highlight">FOR LOVE</span></div>
+              <div class="card-particles">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="corner-elements">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="scan-line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <span class="foot-brand"><img class="foot-logo" src="assets/asset-005.png" alt="Travel for love logo" />© 2026 Swasthik • Travel for love</span>
+      <span>Photos from Travel for love: Munnar, Kolukkumalai & Kodaikanal. Contact: Swasthiknaik1234@gmail.com</span>
+    </div>
+    <div style="margin-top:10px;opacity:.85">
+      Source: <a href="https://travelforlove.my.canva.site/" target="_blank" rel="noopener">Travel for love (Canva)</a></div>
+  </footer>
+</div>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top" hidden>↑</button>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Trip story">
+  <div class="lb-wrap">
+    <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    <button class="lb-sound" id="lbSound" type="button" aria-label="Turn sound on for story video" aria-pressed="false">
+      <svg class="lb-sound-off-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="m16 9 5 6"></path><path d="m21 9-5 6"></path></svg>
+      <svg class="lb-sound-on-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18 6a8.5 8.5 0 0 1 0 12"></path></svg>
+      <span id="lbSoundLabel">Sound on</span>
+    </button>
+    <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="Previous story">‹</button>
+    <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="Next story">›</button>
+    <button class="lb-play" id="lbPlay" type="button" aria-label="Play or pause slideshow">▶ Slideshow</button>
+    <span class="lb-count" id="lbCount" aria-hidden="true"></span>
+    <div class="lb-dialog">
+      <div class="lb-media-stage">
+        <img id="lbImg" src="assets/asset-006.jpg" alt="Swasthik travelling — Travel for love" />
+        <video id="lbVideo" style="display:none" muted loop playsinline preload="metadata" aria-label="Video from this trip"></video>
+        <div class="lb-video-ui" id="lbVideoUi" aria-hidden="true">
+          <button class="lb-video-toggle" id="lbVideoToggle" type="button" aria-label="Pause story video" data-paused="false">
+            <svg class="lb-video-play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+            <svg class="lb-video-pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"></path></svg>
+          </button>
+          <label class="lb-video-seek-wrap"><input class="lb-video-seek" id="lbVideoSeek" type="range" min="0" max="1000" value="0" step="1" aria-label="Story video progress" /></label>
+        </div>
+      </div>
+      <div class="lb-body">
+        <div class="meta" id="lbMeta"></div>
+        <h3 id="lbTitle"></h3>
+        <p id="lbText"></p>
+        <div class="lb-thumbs" id="lbThumbs" role="group" aria-label="Photos in this story"></div>
+        <div class="facts" style="margin-top:16px">
+          <div class="fact"><b id="lbWhenLabel">When I went</b><span id="lbWhen"></span></div>
+          <div class="fact"><b>Trip length</b><span id="lbDays"></span></div>
+        </div>
+        <p style="margin-top:16px;font-size:13.5px;color:var(--muted)">From Travel for love — follow @_in_finite_killer_ for reels and more photos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIFE QUOTE LIGHTBOX -->
+<div class="quote-lightbox" id="quoteLightbox" role="dialog" aria-modal="true" aria-labelledby="quoteLbTitle" aria-hidden="true">
+  <div class="quote-lightbox-dialog">
+    <button class="quote-lb-close" id="quoteLbClose" type="button" aria-label="Close Life quote viewer">✕</button>
+    <div class="quote-lb-top">
+      <h3 class="quote-lb-title" id="quoteLbTitle">Life quote</h3>
+      <span class="quote-lb-count" id="quoteLbCount" aria-live="polite">01 / 05</span>
+    </div>
+    <div class="quote-lb-media">
+      <img id="quoteLbImage" alt="" hidden />
+      <video id="quoteLbVideo" controls playsinline preload="metadata" hidden aria-label="Cinematic love quote video"></video>
+      <button class="quote-lb-nav quote-lb-prev" id="quoteLbPrev" type="button" aria-label="Previous Life quote">‹</button>
+      <button class="quote-lb-nav quote-lb-next" id="quoteLbNext" type="button" aria-label="Next Life quote">›</button>
+    </div>
+    <p class="quote-lb-note">Use the arrows or swipe to explore</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Single ride-video hero with resilient autoplay recovery and an explicit sound toggle.
+  const heroCard = document.querySelector('.hero-card');
+  const heroSlides = heroCard ? Array.from(heroCard.querySelectorAll('.hero-slide')) : [];
+  const heroDots = heroCard ? Array.from(heroCard.querySelectorAll('.slide-dot')) : [];
+  const heroPrev = heroCard && heroCard.querySelector('.slide-prev');
+  const heroNext = heroCard && heroCard.querySelector('.slide-next');
+  const rideVideo = heroCard && heroCard.querySelector('.ride-video');
+  const rideSoundToggle = heroCard && heroCard.querySelector('.ride-sound-toggle');
+  const rideSoundLabel = rideSoundToggle && rideSoundToggle.querySelector('span');
+  const heroReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let heroIndex = 0;
+  let heroTimer = 0;
+  let rideRetryTimers = [];
+  let rideHasStarted = false;
+  let rideSoundOn = false;
+
+  function syncRideSoundUI(){
+    if(!rideSoundToggle || !rideVideo) return;
+    const isRideActive = heroSlides[heroIndex] === rideVideo;
+    rideSoundToggle.hidden = !isRideActive;
+    rideSoundToggle.setAttribute('aria-pressed',rideSoundOn ? 'true' : 'false');
+    rideSoundToggle.setAttribute('aria-label',rideSoundOn ? 'Turn sound off for the motorcycle ride video' : 'Turn sound on for the motorcycle ride video');
+    if(rideSoundLabel) rideSoundLabel.textContent = rideSoundOn ? 'Sound off' : 'Sound on';
+  }
+
+  function clearRideRetryTimers(){
+    rideRetryTimers.forEach(function(timer){ clearTimeout(timer); });
+    rideRetryTimers = [];
+  }
+
+  function removeRideInteractionRecovery(){
+    document.removeEventListener('pointerdown',tryStartRideFromInteraction,true);
+    document.removeEventListener('touchstart',tryStartRideFromInteraction,true);
+    document.removeEventListener('click',tryStartRideFromInteraction,true);
+    document.removeEventListener('scroll',tryStartRideFromInteraction,true);
+  }
+
+  function markRideStarted(){
+    if(!rideVideo || rideVideo.paused) return;
+    rideHasStarted = true;
+    clearRideRetryTimers();
+    removeRideInteractionRecovery();
+  }
+
+  function playHeroVideo(slide){
+    if(!slide) return;
+    const attempt = slide.play();
+    if(slide !== rideVideo || !attempt || typeof attempt.then !== 'function') return;
+    attempt.then(markRideStarted).catch(function(){ /* Retry paths below keep autoplay silent and button-free. */ });
+  }
+
+  function retryRidePlayback(){
+    if(!rideVideo || heroSlides[heroIndex] !== rideVideo) return;
+    clearRideRetryTimers();
+    [0,320,900,1900,3400].forEach(function(delay){
+      rideRetryTimers.push(setTimeout(function(){
+        if(heroSlides[heroIndex] === rideVideo && rideVideo.paused) playHeroVideo(rideVideo);
+      },delay));
+    });
+  }
+
+  function tryStartRideFromInteraction(){
+    if(!rideVideo || rideHasStarted || heroSlides[heroIndex] !== rideVideo || !rideVideo.paused) return;
+    playHeroVideo(rideVideo);
+  }
+
+  if(rideVideo){
+    rideVideo.defaultMuted = true;
+    rideVideo.muted = true;
+    rideVideo.playsInline = true;
+    rideVideo.addEventListener('playing',markRideStarted);
+    rideVideo.addEventListener('timeupdate',function(){ if(rideVideo.currentTime > .08) markRideStarted(); },{passive:true});
+    document.addEventListener('pointerdown',tryStartRideFromInteraction,{passive:true,capture:true});
+    document.addEventListener('touchstart',tryStartRideFromInteraction,{passive:true,capture:true});
+    document.addEventListener('click',tryStartRideFromInteraction,{passive:true,capture:true});
+    document.addEventListener('scroll',tryStartRideFromInteraction,{passive:true,capture:true});
+  }
+
+  function showHeroSlide(nextIndex, restart){
+    if(!heroSlides.length) return;
+    heroIndex = (nextIndex + heroSlides.length) % heroSlides.length;
+    heroSlides.forEach(function(slide,index){
+      const active = index === heroIndex;
+      slide.classList.toggle('active',active);
+      if(slide.tagName === 'VIDEO'){
+        slide.muted = slide === rideVideo ? !rideSoundOn : true;
+        if(active){
+          if(slide === rideVideo) retryRidePlayback();
+          else playHeroVideo(slide);
+        } else {
+          slide.pause();
+          if(slide === rideVideo) clearRideRetryTimers();
+        }
+      }
+    });
+    syncRideSoundUI();
+    heroDots.forEach(function(dot,index){
+      const active = index === heroIndex;
+      dot.classList.toggle('active',active);
+      if(active) dot.setAttribute('aria-current','true');
+      else dot.removeAttribute('aria-current');
+    });
+    if(restart) startHeroTimer();
+  }
+  function startHeroTimer(){
+    clearTimeout(heroTimer);
+    if(!heroReducedMotion && heroSlides.length > 1){
+      const delay = heroSlides[heroIndex] === rideVideo ? 21000 : 6500;
+      heroTimer = setTimeout(function(){
+        showHeroSlide(heroIndex+1,false);
+        startHeroTimer();
+      },delay);
+    }
+  }
+  if(heroPrev) heroPrev.addEventListener('click',function(){ showHeroSlide(heroIndex-1,true); });
+  if(heroNext) heroNext.addEventListener('click',function(){ showHeroSlide(heroIndex+1,true); });
+  heroDots.forEach(function(dot,index){ dot.addEventListener('click',function(){ showHeroSlide(index,true); }); });
+  if(rideSoundToggle && rideVideo){
+    rideSoundToggle.addEventListener('click',function(){
+      rideSoundOn = !rideSoundOn;
+      rideVideo.muted = !rideSoundOn;
+      syncRideSoundUI();
+      playHeroVideo(rideVideo);
+    });
+  }
+  window.addEventListener('pageshow',function(){
+    if(heroSlides[heroIndex] === rideVideo) retryRidePlayback();
+  });
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden && heroSlides[heroIndex] === rideVideo) retryRidePlayback();
+  });
+  if(heroCard){
+    heroCard.addEventListener('mouseenter',function(){ clearInterval(heroTimer); });
+    heroCard.addEventListener('mouseleave',startHeroTimer);
+    heroCard.addEventListener('focusin',function(){ clearInterval(heroTimer); });
+    heroCard.addEventListener('focusout',function(event){ if(!heroCard.contains(event.relatedTarget)) startHeroTimer(); });
+  }
+  showHeroSlide(0,false);
+  startHeroTimer();
+
+  const stories = {
+    munnar:{title:"The Munnar hills", meta:"Munnar, Kerala • Idukki district", img:"assets/asset-006.jpg", video:"assets/asset-012.mp4", alt:"Tea plantations in the Munnar hills", photos:[
+      {src:"assets/asset-006.jpg", alt:"Tea plantations in the Munnar hills"}
+    ], when:"Ride with friends", days:"1,600m", text:"Munnar, in Kerala's Idukki district, is one of India's most iconic hill stations — 1,600m above sea level and wrapped in sprawling tea plantations. Personally, I loved this place very much when I went on a ride with my friends."},
+    neelakurinji:{title:"Neelakurinji Flower", meta:"Kote betta, Kodagu district", img:"assets/asset-014.jpg", alt:"Standing among blooming Neelakurinji flowers at Kote betta, Kodagu", photos:[
+      {src:"assets/asset-014.jpg", alt:"Standing among blooming Neelakurinji flowers at Kote betta, Kodagu"},
+      {src:"assets/asset-007.jpg", alt:"Neelakurinji flowers in full bloom on a misty Western Ghats hillside"},
+      {src:"assets/asset-032.jpg", alt:"Neelakurinji blooms overlooking the green valleys and hills of the Western Ghats"}
+    ], when:"Blooms every 12 years", days:"Rare bloom", text:"Neelakurinji blooms once every 12 years in the Shola forests of the Western Ghats — a rare, fleeting reminder that even amid life's chaos, the world stays beautiful."},
+    mallalli:{title:"Mallalli Falls (view from kote betta)", meta:"Mallalli Falls • Coorg", img:"assets/asset-033.jpg", video:"assets/asset-008.mp4", alt:"Waterfall view in Coorg", when:"Kote Betta view", days:"Waterfall", text:"Mallalli Falls (view from kote betta)"},
+    kolukkumalai:{title:"Kolukkumalai Peak", meta:"Idukki district in Kerala", img:"assets/asset-034.jpg", videos:["assets/asset-009.mp4","assets/asset-035.mp4"], alt:"Kolukkumalai Peak", photos:[
+      {src:"assets/asset-034.jpg", alt:"Kolukkumalai's green peak ridge under a clear blue sky"},
+      {src:"assets/asset-036.jpg", alt:"Sea of clouds below the ridges at Kolukkumalai Peak"},
+      {src:"assets/asset-037.jpg", alt:"Sunrise over a sea of clouds at Kolukkumalai Peak"},
+      {src:"assets/asset-038.jpg", alt:"In the green helmet beneath the rock overhang at Kolukkumalai Peak, high above the clouds"}
+    ], when:"Nov–May • 3 AM start", days:"3–4 hours", text:"Best visited November to May; misty and low-visibility during the August–October monsoon. Go early for the clearest views — we woke up at 3 o'clock. A jeep ride (about an hour each way) gets you there; plan 3–4 hours total, or stay overnight to catch sunrise and sunset over the tea gardens, as we did."},
+    guna:{title:"Guna Caves, Kodaikanal", meta:"Guna Caves • Devil's Kitchen", img:"assets/asset-010.jpg", alt:"Stone arch entrance at Guna Caves, Kodaikanal", photos:[
+      {src:"assets/asset-010.jpg", alt:"Stone arch entrance with the Guna Cave sign and bat sculpture, Kodaikanal", pos:"center 62%"},
+      {src:"assets/asset-039.jpg", alt:"Misty forest with twisted tree roots and shafts of light near Guna Caves"},
+      {src:"assets/asset-040.jpg", alt:"Foggy forest floor with exposed tree roots near Guna Caves, Kodaikanal"},
+      {src:"assets/asset-041.jpg", alt:"Green GUNA CAVE entrance signboards at Guna Caves, Kodaikanal"}
+    ], when:"6 July 2023", days:"₹10 entry", text:"Originally called Devil's Kitchen, Guna Caves became a popular sightseeing spot after featuring in Kamal Haasan's 1991 film Guna. The caves are fenced off for safety and only viewable from a distance. Timing: 8 AM–4 PM | Entry: ₹10 (₹20 for camera)."},
+    dolphin:{title:"Vattakanal Dolphin Nose Point", meta:"Vattakanal • Kodaikanal", img:"assets/asset-042.jpg", video:"assets/asset-011.mp4", alt:"Dolphin Nose Point, Vattakanal", photos:[
+      {src:"assets/asset-042.jpg", alt:"Standing on the Dolphin Nose rock with arms open to the mist — every journey is a new lesson, Vattakanal"}
+    ], when:"8 km from lake", days:"3 km trek", text:"Dolphin Nose Point is 8 km off from Kodaikanal Lake. On the way you can enjoy Liril Falls and Vattakanal Waterfalls. No entrance or parking fees. Reaching this spot requires a moderate 3 km trek through the pines and rocks of the Palani Hill Range."},
+    maidadi:{title:"Maidadi view point", meta:"Kalasa • Chikkamagaluru district", img:"assets/asset-043.jpg", video:"assets/asset-013.mp4", alt:"Sea of clouds spilling over the green ridges at Maidadi view point, Kalasa", photos:[
+      {src:"assets/asset-043.jpg", alt:"Sea of clouds spilling over the green ridges at Maidadi view point, Kalasa"},
+      {src:"assets/asset-044.jpg", alt:"The steep green cliff face of Maidadi wrapped in mist, Kalasa"},
+      {src:"assets/asset-045.jpg", alt:"The jeep at Maidadi view point at night, headlights on under the evening sky, Kalasa"}
+    ], when:"29 Sept 2026", days:"Sunset", text:"Maidadi Viewpoint is a hidden Western Ghats gem where cars and bikes can drive straight to the summit for effortless views of a dramatic sea of clouds. We ended up visiting this stunning peak on an unplanned trip with friends, catching an unforgettable sunset."},
+    dhanushkodi:{title:"Dhanushkodi", meta:"Dhanushkodi • Tamil Nadu coast", img:"assets/asset-046.jpg", video:"assets/asset-015.mp4", alt:"Sunset over the Dhanushkodi sand spit where the sea meets the sky", photos:[
+      {src:"assets/asset-046.jpg", alt:"Sunset over the Dhanushkodi sand spit where the sea meets the sky"},
+      {src:"assets/asset-047.jpg", alt:"Swasthik in his helmet beside the Ashoka pillar at Dhanushkodi, the last point of India"},
+      {src:"assets/asset-048.jpg", alt:"Colourful fishing boats anchored in the turquoise water at Dhanushkodi"},
+      {src:"assets/asset-049.jpg", alt:"Local shell and souvenir stalls on the beach at Dhanushkodi"},
+      {src:"assets/asset-050.jpg", alt:"Shell chandeliers hanging in front of the ruined church at Dhanushkodi at sunset"},
+      {src:"assets/asset-051.jpg", alt:"Dhanushkodi in three scenes — a fruit vendor on the beach, the old stone ruins, and fisherwomen hauling in their nets"}
+    ], when:"Edge of India", days:"Beach town", text:"Dhanushkodi is a unique Tamil Nadu coastal town known for its striking geography and haunting history. Left largely uninhabited after a 1964 cyclone, modern infrastructure upgrades have transformed it into an iconic destination. A July 9, 2023 road trip with friends captured unforgettable images of historic ruins and local shops."}
+  };
+
+  const grid = document.getElementById('grid');
+  const cards = Array.from(grid.querySelectorAll('.card'));
+  const emptyEl = document.getElementById('emptyState');
+  const countEl = document.getElementById('resultCount');
+  const searchInput = document.getElementById('searchInput');
+  const chips = Array.from(document.querySelectorAll('#chips .chip'));
+  let activeFilter = 'all';
+  let syncGalleryGlow = function(){};
+
+  function applyFilters(){
+    const words = (searchInput.value || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+    let visible = 0;
+    cards.forEach(card=>{
+      const region = (card.dataset.region||'');
+      // textContent (not innerText): innerText is empty for display:none cards
+      // in Safari, so a hidden card could never be searched back into view.
+      const tags = (card.dataset.tags||'') + ' ' + card.textContent.toLowerCase();
+      const matchesFilter = activeFilter==='all' || region.includes(activeFilter) || tags.includes(activeFilter);
+      const matchesSearch = words.every(w => tags.includes(w));
+      const show = matchesFilter && matchesSearch;
+      card.style.display = show ? '' : 'none';
+      if(show) visible++;
+    });
+    emptyEl.style.display = visible===0 ? '' : 'none';
+    countEl.textContent = visible===1 ? '1 trip' : visible + ' trips';
+    syncGalleryGlow();
+  }
+
+  chips.forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      chips.forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      activeFilter = chip.dataset.filter;
+      // reveal extra card when exploring
+      applyFilters();
+    });
+  });
+  searchInput.addEventListener('input', applyFilters);
+  searchInput.addEventListener('search', applyFilters);
+
+  // Likes (in-memory for this visit)
+  grid.addEventListener('click', (e)=>{
+    const likeBtn = e.target.closest('[data-like]');
+    if(likeBtn){
+      e.stopPropagation();
+      likeBtn.classList.toggle('liked');
+      const glyph = likeBtn.querySelector('.heart-glyph');
+      const mark = likeBtn.classList.contains('liked') ? '♥' : '♡';
+      if(glyph) glyph.textContent = mark; else likeBtn.textContent = mark;
+      likeBtn.classList.remove('bursting');
+      void likeBtn.offsetWidth;
+      likeBtn.classList.add('bursting');
+      clearTimeout(likeBtn._burstTimer);
+      likeBtn._burstTimer = setTimeout(()=> likeBtn.classList.remove('bursting'), 900);
+      syncGalleryGlow();
+      return;
+    }
+    const card = e.target.closest('.card');
+    if(card) openStory(card.dataset.id);
+  });
+  grid.addEventListener('keydown', (e)=>{
+    if(e.key==='Enter' || e.key===' '){
+      const card = e.target.closest('.card');
+      if(card){ e.preventDefault(); openStory(card.dataset.id); }
+    }
+  });
+  document.querySelectorAll('[data-open]').forEach(el=>{
+    el.addEventListener('click', ()=> openStory(el.getAttribute('data-open')));
+    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter') openStory(el.getAttribute('data-open')); });
+  });
+
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbVideo = document.getElementById('lbVideo');
+  const lbVideoUi = document.getElementById('lbVideoUi');
+  const lbVideoToggle = document.getElementById('lbVideoToggle');
+  const lbVideoSeek = document.getElementById('lbVideoSeek');
+  const lbSound = document.getElementById('lbSound');
+  const lbSoundLabel = document.getElementById('lbSoundLabel');
+  const lbMeta = document.getElementById('lbMeta');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbText = document.getElementById('lbText');
+  const lbWhen = document.getElementById('lbWhen');
+  const lbDays = document.getElementById('lbDays');
+  const lbThumbs = document.getElementById('lbThumbs');
+  let lbList = [], lbIndex = 0, lbTimer = null;
+  const lbCount = document.getElementById('lbCount');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  const lbPlay = document.getElementById('lbPlay');
+  function syncStoryVideoControls(){
+    const paused = lbVideo.paused;
+    lbVideoToggle.dataset.paused = paused ? 'true' : 'false';
+    lbVideoToggle.setAttribute('aria-label', paused ? 'Play story video' : 'Pause story video');
+    const duration = Number.isFinite(lbVideo.duration) && lbVideo.duration > 0 ? lbVideo.duration : 0;
+    lbVideoSeek.disabled = !duration;
+    lbVideoSeek.value = duration ? String(Math.round((lbVideo.currentTime / duration) * 1000)) : '0';
+    lbVideoSeek.setAttribute('aria-valuetext', duration ? Math.round(lbVideo.currentTime) + ' seconds of ' + Math.round(duration) + ' seconds' : 'Video loading');
+  }
+  function showStoryVideoControls(show){
+    lbVideoUi.classList.toggle('show', show);
+    lbVideoUi.setAttribute('aria-hidden', show ? 'false' : 'true');
+    lb.classList.toggle('video-active', show);
+    lbVideoToggle.tabIndex = show ? 0 : -1;
+    lbVideoSeek.tabIndex = show ? 0 : -1;
+    if(show) syncStoryVideoControls();
+  }
+  function setStorySound(on){
+    lbVideo.muted = !on;
+    lbVideo.volume = 1;
+    lbSound.setAttribute('aria-pressed', on ? 'true' : 'false');
+    lbSound.setAttribute('aria-label', on ? 'Turn sound off for story video' : 'Turn sound on for story video');
+    lbSoundLabel.textContent = on ? 'Sound off' : 'Sound on';
+  }
+  function showStorySound(show){
+    lbSound.classList.toggle('show', show);
+    lbSound.setAttribute('aria-hidden', show ? 'false' : 'true');
+    lbSound.tabIndex = show ? 0 : -1;
+  }
+  function storyVideos(s){
+    if(s.videos && s.videos.length) return s.videos;
+    return s.video ? [s.video] : [];
+  }
+  function setPhoto(s, i){
+    const p = s.photos[i];
+    if(!p) return;
+    lbVideo.pause();
+    lbVideo.style.display='none';
+    showStorySound(false);
+    showStoryVideoControls(false);
+    lbImg.style.display='';
+    lbImg.src = p.src;
+    lbImg.alt = p.alt || s.alt || '';
+    lbImg.style.objectPosition = p.pos || 'center';
+    const off = storyVideos(s).length;
+    Array.from(lbThumbs.children).forEach((b, j)=> b.classList.toggle('active', j === i + off));
+  }
+  function setVideo(s, vi){
+    const vids = storyVideos(s);
+    const src = vids[vi || 0];
+    if(!src) return;
+    lbImg.style.display='none';
+    lbVideo.style.display='block';
+    showStorySound(true);
+    showStoryVideoControls(true);
+    if(lbVideo.getAttribute('src') !== src){ lbVideo.src = src; }
+    try{ lbVideo.currentTime = 0; }catch(e){}
+    lbVideo.play().catch(()=>{});
+    Array.from(lbThumbs.children).forEach((b, j)=> b.classList.toggle('active', j === (vi || 0)));
+  }
+  function buildGallery(s){
+    lbThumbs.innerHTML = '';
+    const vids = storyVideos(s);
+    const photos = s.photos || [];
+    if(photos.length + vids.length < 2){
+      lbThumbs.classList.remove('show');
+      return;
+    }
+    vids.forEach((src, vi)=>{
+      const vb = document.createElement('button');
+      vb.type = 'button';
+      vb.className = 'lb-thumb' + (vi === 0 ? ' active' : '');
+      vb.setAttribute('aria-label', 'Play the video — ' + s.title);
+      const vv = document.createElement('video');
+      vv.src = src;
+      vv.muted = true;
+      vv.playsInline = true;
+      vv.preload = 'metadata';
+      vv.setAttribute('aria-hidden', 'true');
+      vb.appendChild(vv);
+      const mark = document.createElement('span');
+      mark.className = 'lb-thumb-play';
+      mark.textContent = '▶';
+      vb.appendChild(mark);
+      vb.addEventListener('click', ()=> setVideo(s, vi));
+      lbThumbs.appendChild(vb);
+    });
+    photos.forEach((p, i)=>{
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'lb-thumb' + (!vids.length && i === 0 ? ' active' : '');
+      b.setAttribute('aria-label', 'Photo ' + (i + 1) + ' of ' + photos.length + ' — ' + s.title);
+      const im = document.createElement('img');
+      im.src = p.src;
+      im.alt = '';
+      im.loading = 'lazy';
+      b.appendChild(im);
+      b.addEventListener('click', ()=> setPhoto(s, i));
+      lbThumbs.appendChild(b);
+    });
+    lbThumbs.classList.add('show');
+  }
+  function renderStory(id){
+    const s = stories[id];
+    if(!s) return;
+    const openVids = storyVideos(s);
+    if(openVids.length){
+      lbImg.style.display='none';
+      lbVideo.src = openVids[0];
+      lbVideo.style.display='block';
+      showStorySound(true);
+      showStoryVideoControls(true);
+      lbVideo.currentTime = 0;
+      lbVideo.play().catch(()=>{});
+      buildGallery(s);
+    } else {
+      lbVideo.pause();
+      lbVideo.removeAttribute('src');
+      lbVideo.load();
+      lbVideo.style.display='none';
+      showStorySound(false);
+      showStoryVideoControls(false);
+      lbImg.style.display='';
+      lbImg.src = s.img; lbImg.alt = s.alt;
+      lbImg.style.objectPosition = s.pos || 'center';
+      buildGallery(s);
+      if(s.photos && s.photos.length) setPhoto(s, 0);
+    }
+    lbMeta.textContent = s.meta;
+    lbTitle.textContent = s.title;
+    lbText.textContent = s.text;
+    lbWhen.textContent = s.when;
+    lbDays.textContent = s.days;
+    lbCount.textContent = lbList.length ? (lbIndex + 1) + ' / ' + lbList.length : '';
+    const multi = lbList.length > 1;
+    lbPrev.style.display = multi ? '' : 'none';
+    lbNext.style.display = multi ? '' : 'none';
+  }
+  function openStory(id){
+    if(!stories[id]) return;
+    lbList = cards.filter(c=>c.style.display!=='none').map(c=>c.dataset.id).filter(x=>stories[x]);
+    lbIndex = lbList.indexOf(id);
+    if(lbIndex < 0){ lbList = [id]; lbIndex = 0; }
+    setStorySound(false);
+    renderStory(id);
+    lb.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function lbStep(dir){
+    if(lbList.length < 2) return;
+    lbIndex = (lbIndex + dir + lbList.length) % lbList.length;
+    renderStory(lbList[lbIndex]);
+    if(lbTimer) startLbAuto();
+  }
+  function startLbAuto(){
+    stopLbAuto();
+    lbTimer = setInterval(()=>{
+      if(lbList.length > 1){
+        lbIndex = (lbIndex + 1) % lbList.length;
+        renderStory(lbList[lbIndex]);
+      }
+    }, 4200);
+    lbPlay.textContent = '⏸ Pause';
+  }
+  function stopLbAuto(){
+    if(lbTimer){ clearInterval(lbTimer); lbTimer = null; }
+    lbPlay.textContent = '▶ Slideshow';
+  }
+  function closeStory(){
+    lb.classList.remove('open');
+    document.body.style.overflow='';
+    lbVideo.pause();
+    stopLbAuto();
+  }
+  document.getElementById('lbClose').addEventListener('click', closeStory);
+  lbVideoToggle.addEventListener('click', ()=>{
+    if(lbVideo.paused) lbVideo.play().catch(()=>{});
+    else lbVideo.pause();
+  });
+  lbVideoSeek.addEventListener('input', ()=>{
+    if(Number.isFinite(lbVideo.duration) && lbVideo.duration > 0){
+      lbVideo.currentTime = (Number(lbVideoSeek.value) / 1000) * lbVideo.duration;
+      syncStoryVideoControls();
+    }
+  });
+  ['play','playing','pause','timeupdate','durationchange','loadedmetadata','ended'].forEach(eventName=>{
+    lbVideo.addEventListener(eventName, syncStoryVideoControls);
+  });
+  lbSound.addEventListener('click', ()=>{
+    const turnOn = lbVideo.muted;
+    setStorySound(turnOn);
+    if(turnOn) lbVideo.play().catch(()=>{});
+  });
+  lbPrev.addEventListener('click', ()=>lbStep(-1));
+  lbNext.addEventListener('click', ()=>lbStep(1));
+  lbPlay.addEventListener('click', ()=>{ lbTimer ? stopLbAuto() : startLbAuto(); });
+  lb.addEventListener('click', (e)=>{ if(e.target===lb) closeStory(); });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape') closeStory();
+    if(lb.classList.contains('open')){
+      if(e.key==='ArrowRight') lbStep(1);
+      if(e.key==='ArrowLeft') lbStep(-1);
+    }
+  });
+  let lbTouchX = null;
+  lb.addEventListener('touchstart', (e)=>{ lbTouchX = e.changedTouches[0].clientX; }, {passive:true});
+  lb.addEventListener('touchend', (e)=>{
+    if(lbTouchX === null) return;
+    const dx = e.changedTouches[0].clientX - lbTouchX;
+    if(Math.abs(dx) > 48) lbStep(dx < 0 ? 1 : -1);
+    lbTouchX = null;
+  }, {passive:true});
+
+  // ---------- Motion & extras ----------
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Lightswind-style gallery glow: a duplicate grid is revealed by a cursor-centred
+  // radial mask. Fine-pointer gating keeps touch interactions and mobile layout intact.
+  const glowPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  if(grid && glowPointer.matches && !reduceMotion){
+    const glowShell = document.createElement('div');
+    glowShell.className = 'glowing-grid-shell';
+    grid.parentNode.insertBefore(glowShell, grid);
+    glowShell.appendChild(grid);
+
+    const glowOverlay = document.createElement('div');
+    glowOverlay.className = 'grid glowing-grid-overlay';
+    glowOverlay.setAttribute('aria-hidden','true');
+    glowOverlay.inert = true;
+    glowShell.appendChild(glowOverlay);
+
+    function syncGlowVideos(){
+      const sourceVideos = Array.from(grid.querySelectorAll(':scope > .card:not([style*="display: none"]) video'));
+      const glowVideos = Array.from(glowOverlay.querySelectorAll('video'));
+      glowVideos.forEach(function(video,index){
+        const source = sourceVideos[index];
+        if(!source) return;
+        video.muted = true;
+        video.tabIndex = -1;
+        const matchTime = function(){
+          try{ video.currentTime = source.currentTime || 0; }catch(error){}
+          const playPromise = video.play();
+          if(playPromise && playPromise.catch) playPromise.catch(function(){});
+        };
+        if(video.readyState >= 1) matchTime();
+        else video.addEventListener('loadedmetadata',matchTime,{once:true});
+      });
+    }
+
+    syncGalleryGlow = function(){
+      const fragment = document.createDocumentFragment();
+      Array.from(grid.children).forEach(function(card){
+        if(!card.classList.contains('card') || card.style.display === 'none') return;
+        const clone = card.cloneNode(true);
+        clone.removeAttribute('tabindex');
+        clone.removeAttribute('data-card-enter');
+        clone.classList.remove('card-entered','is-glow-hovered');
+        clone.querySelectorAll('[id]').forEach(function(el){ el.removeAttribute('id'); });
+        clone.querySelectorAll('button,a,input,video').forEach(function(el){ el.tabIndex = -1; });
+        fragment.appendChild(clone);
+      });
+      glowOverlay.replaceChildren(fragment);
+      syncGlowVideos();
+    };
+
+    let hoveredGlowId = '';
+    function setHoveredGlowCard(id){
+      if(hoveredGlowId === id) return;
+      hoveredGlowId = id || '';
+      glowOverlay.querySelectorAll('.is-glow-hovered').forEach(function(card){ card.classList.remove('is-glow-hovered'); });
+      if(!hoveredGlowId) return;
+      const match = Array.from(glowOverlay.querySelectorAll('.card')).find(function(card){ return card.dataset.id === hoveredGlowId; });
+      if(match) match.classList.add('is-glow-hovered');
+    }
+
+    glowShell.addEventListener('mousemove',function(event){
+      const rect = glowShell.getBoundingClientRect();
+      glowOverlay.style.setProperty('--x',(event.clientX-rect.left)+'px');
+      glowOverlay.style.setProperty('--y',(event.clientY-rect.top)+'px');
+      glowOverlay.style.opacity = '1';
+      const pointedCard = event.target.closest && event.target.closest('#grid > .card');
+      setHoveredGlowCard(pointedCard ? pointedCard.dataset.id : '');
+    });
+    glowShell.addEventListener('mouseleave',function(){
+      glowOverlay.style.opacity = '0';
+      setHoveredGlowCard('');
+    });
+    syncGalleryGlow();
+  }
+
+  // Fixed section navigation. JavaScript only handles section state.
+  const topNav = document.getElementById('topNav');
+  const topNavToggle = document.getElementById('topNavToggle');
+  const topNavLinks = topNav ? Array.from(topNav.querySelectorAll('[data-nav-target]')) : [];
+  const topNavTargets = topNavLinks.map(function(link){
+    return {link:link, target:document.getElementById(link.dataset.navTarget)};
+  }).filter(function(item){ return item.target; });
+  const navMobile = window.matchMedia('(max-width: 860px)');
+  let navSpyRaf = 0;
+
+  function setNavOpen(open, returnFocus){
+    if(!topNav || !topNavToggle) return;
+    const next = !!open && navMobile.matches;
+    topNav.dataset.open = next ? 'true' : 'false';
+    topNavToggle.setAttribute('aria-expanded',next ? 'true' : 'false');
+    topNavToggle.setAttribute('aria-label',next ? 'Close navigation menu' : 'Open navigation menu');
+    document.body.classList.toggle('nav-open',next);
+    if(next){
+      const first = topNav.querySelector('.top-nav-link');
+      if(first) first.focus();
+    } else if(returnFocus){
+      topNavToggle.focus();
+    }
+  }
+
+  function paintTopNav(){
+    navSpyRaf = 0;
+    if(!topNavTargets.length) return;
+    const marker = Math.min(150,(window.innerHeight || 700) * .24);
+    let active = topNavTargets[0];
+    topNavTargets.forEach(function(item){
+      if(item.target.getBoundingClientRect().top <= marker) active = item;
+    });
+    topNavTargets.forEach(function(item){
+      const selected = item === active;
+      item.link.dataset.active = selected ? 'true' : 'false';
+      if(selected) item.link.setAttribute('aria-current','page');
+      else item.link.removeAttribute('aria-current');
+    });
+    const heroTarget = document.getElementById('home');
+    const overHero = !!heroTarget && heroTarget.getBoundingClientRect().bottom > 72;
+    topNav.classList.toggle('over-hero',overHero);
+  }
+  function queueTopNav(){
+    if(!navSpyRaf) navSpyRaf = requestAnimationFrame(paintTopNav);
+  }
+
+  if(topNavToggle){
+    topNavToggle.addEventListener('click',function(){
+      setNavOpen(topNav.dataset.open !== 'true',false);
+    });
+  }
+  topNavLinks.forEach(function(link){
+    link.addEventListener('click',function(event){
+      const target = document.getElementById(link.dataset.navTarget);
+      if(!target) return;
+      event.preventDefault();
+      setNavOpen(false,false);
+      target.scrollIntoView({behavior:reduceMotion ? 'auto' : 'smooth',block:'start'});
+    });
+  });
+  document.addEventListener('keydown',function(event){
+    if(event.key === 'Escape' && topNav && topNav.dataset.open === 'true') setNavOpen(false,true);
+  });
+  if(navMobile.addEventListener){
+    navMobile.addEventListener('change',function(event){ if(!event.matches) setNavOpen(false,false); });
+  }
+  window.addEventListener('scroll',queueTopNav,{passive:true});
+  window.addEventListener('resize',queueTopNav,{passive:true});
+  paintTopNav();
+
+  const heroContent = document.querySelector('.hero-content');
+
+  // WattBank-style word reveal. Text nodes are wrapped without changing any wording or
+  // nested emphasis, then every word is scrubbed directly from the element's viewport
+  // position. Scrolling upward reverses the reveal exactly.
+  const wordRevealGroups = [];
+  function wrapRevealWords(el){
+    if(!el || el.dataset.wordReveal) return;
+    el.dataset.wordReveal = '1';
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode:function(node){
+        return /\S/.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    const textNodes = [];
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(node){
+      const frag = document.createDocumentFragment();
+      node.nodeValue.split(/(\s+)/).forEach(function(part){
+        if(!part) return;
+        if(/^\s+$/.test(part)){
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'scroll-word';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+    const words = Array.from(el.querySelectorAll('.scroll-word'));
+    if(words.length) wordRevealGroups.push({el:el, words:words});
+  }
+
+  [
+    document.querySelector('.brand-3d'),
+    document.querySelector('.featured-body > p'),
+    document.querySelector('[aria-labelledby="road-title"] .section-head h2'),
+    document.querySelector('[aria-labelledby="road-title"] .section-head p'),
+    document.querySelector('.two .panel h3.tilt3d'),
+    document.querySelector('.two .panel > p')
+  ].forEach(wrapRevealWords);
+
+  let wordRevealRaf = 0;
+  function paintWordReveals(){
+    wordRevealRaf = 0;
+    if(reduceMotion){
+      wordRevealGroups.forEach(function(group){
+        group.words.forEach(function(word){ word.style.setProperty('--word-opacity','1'); });
+      });
+      return;
+    }
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const startY = vh * .72;
+    wordRevealGroups.forEach(function(group){
+      const rect = group.el.getBoundingClientRect();
+      const endY = Math.max(18, vh * .16 - rect.height);
+      const travel = Math.max(1, startY - endY);
+      const progress = Math.max(0, Math.min(1, (startY - rect.top) / travel));
+      const count = group.words.length;
+      group.words.forEach(function(word, index){
+        const local = Math.max(0, Math.min(1, progress * (count + .72) - index));
+        const eased = local * local * (3 - 2 * local);
+        const minOpacity = word.closest('.hero h1 em') ? .72 : .18;
+        word.style.setProperty('--word-opacity', (minOpacity + (1 - minOpacity) * eased).toFixed(3));
+      });
+    });
+  }
+  function queueWordReveal(){
+    if(!wordRevealRaf) wordRevealRaf = requestAnimationFrame(paintWordReveals);
+  }
+  window.addEventListener('scroll', queueWordReveal, {passive:true});
+  window.addEventListener('resize', queueWordReveal, {passive:true});
+  paintWordReveals();
+
+  // While the reader scrolls, the highlights stay scrubbed to that vertical movement.
+  // After scrolling settles, a small additive offset resumes the original slow leftward
+  // drift without snapping away from the scroll-controlled position.
+  const roadSection = document.querySelector('[aria-labelledby="road-title"]');
+  const roadStrip = roadSection && roadSection.querySelector('.road-strip');
+  const roadTrack = roadSection && roadSection.querySelector('.road-track');
+  const roadSets = roadTrack ? Array.from(roadTrack.querySelectorAll('.road-set')) : [];
+  const roadFrames = roadSets.length ? Array.from(roadSets[0].querySelectorAll('.road-frame')) : [];
+  let roadRaf = 0;
+  let roadIdleRaf = 0;
+  let roadIdleTimer = 0;
+  let roadIdleOffset = 0;
+  let roadLastIdleTime = 0;
+  let roadIsScrolling = false;
+  const roadIdleDelay = 150;
+  const roadDriftSpeed = .035;
+  function paintRoadScroll(){
+    roadRaf = 0;
+    if(!roadSection || !roadStrip || !roadTrack || !roadSets.length) return;
+    if(reduceMotion){
+      roadTrack.style.transform = '';
+    } else {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const rect = roadSection.getBoundingClientRect();
+      const startY = vh * .82;
+      const finishY = vh * .2;
+      const travel = Math.max(1, startY + rect.height - finishY);
+      const progress = Math.max(0, Math.min(.92, (startY - rect.top) / travel));
+      const loopWidth = roadSets[0].getBoundingClientRect().width;
+      const distance = loopWidth ? (loopWidth * progress + roadIdleOffset) % loopWidth : 0;
+      roadTrack.style.transform = 'translateX(' + (-distance).toFixed(1) + 'px)';
+    }
+    const stripRect = roadStrip.getBoundingClientRect();
+    roadFrames.forEach(function(frame){
+      const r = frame.getBoundingClientRect();
+      const visible = r.left >= stripRect.left + 2 && r.right <= stripRect.right - 2;
+      frame.inert = !visible;
+      frame.tabIndex = visible ? 0 : -1;
+    });
+  }
+  function tickRoadIdle(time){
+    roadIdleRaf = 0;
+    if(reduceMotion || roadIsScrolling || !roadTrack || !roadSets.length) return;
+    if(!roadLastIdleTime) roadLastIdleTime = time;
+    const elapsed = Math.min(50, time - roadLastIdleTime);
+    roadLastIdleTime = time;
+    const loopWidth = roadSets[0].getBoundingClientRect().width;
+    if(loopWidth) roadIdleOffset = (roadIdleOffset + elapsed * roadDriftSpeed) % loopWidth;
+    paintRoadScroll();
+    roadIdleRaf = requestAnimationFrame(tickRoadIdle);
+  }
+  function startRoadIdle(){
+    if(reduceMotion || roadIdleRaf || !roadTrack) return;
+    roadIsScrolling = false;
+    roadLastIdleTime = 0;
+    roadIdleRaf = requestAnimationFrame(tickRoadIdle);
+  }
+  function queueRoadScroll(){
+    roadIsScrolling = true;
+    if(roadIdleRaf){
+      cancelAnimationFrame(roadIdleRaf);
+      roadIdleRaf = 0;
+    }
+    roadLastIdleTime = 0;
+    clearTimeout(roadIdleTimer);
+    if(!roadRaf) roadRaf = requestAnimationFrame(paintRoadScroll);
+    roadIdleTimer = setTimeout(startRoadIdle, roadIdleDelay);
+  }
+  window.addEventListener('scroll', queueRoadScroll, {passive:true});
+  window.addEventListener('resize', queueRoadScroll, {passive:true});
+  paintRoadScroll();
+  startRoadIdle();
+
+  // Dedicated scroll-triggered gallery entrance. Cards that share an observer batch rise
+  // in reading order, then release their temporary styles so existing hover motion remains.
+  let cardEnterObserver = null;
+  function prepareCardReveal(card){
+    if(!card || card.dataset.cardRevealReady) return;
+    card.dataset.cardRevealReady = '1';
+    if(reduceMotion) return;
+    card.setAttribute('data-card-enter','');
+    if(cardEnterObserver) cardEnterObserver.observe(card);
+  }
+  if('IntersectionObserver' in window && !reduceMotion){
+    cardEnterObserver = new IntersectionObserver(function(entries){
+      const entering = entries.filter(function(entry){ return entry.isIntersecting; }).sort(function(a,b){
+        const ar = a.target.getBoundingClientRect();
+        const br = b.target.getBoundingClientRect();
+        return Math.abs(ar.top - br.top) > 8 ? ar.top - br.top : ar.left - br.left;
+      });
+      entering.forEach(function(entry, index){
+        const card = entry.target;
+        const delay = index * 85;
+        card.style.setProperty('--card-delay', delay + 'ms');
+        card.classList.add('card-entered');
+        cardEnterObserver.unobserve(card);
+        setTimeout(function(){
+          card.removeAttribute('data-card-enter');
+          card.classList.remove('card-entered');
+          card.style.removeProperty('--card-delay');
+        }, 820 + delay);
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -26px 0px'});
+  }
+  cards.forEach(prepareCardReveal);
+  if(!cardEnterObserver) cards.forEach(function(card){ card.classList.add('card-entered'); });
+
+
+  // Gallery slideshow button
+  const playShow = document.getElementById('playShow');
+  if(playShow){
+    playShow.addEventListener('click', ()=>{
+      const ids = cards.filter(c=>c.style.display!=='none').map(c=>c.dataset.id).filter(x=>stories[x]);
+      if(!ids.length) return;
+      openStory(ids[0]);
+      startLbAuto();
+    });
+  }
+
+  // Existing section reveal (gallery cards use the dedicated staggered observer above).
+  document.querySelectorAll('.profile, .featured, .panel, .cta').forEach(el=>el.setAttribute('data-reveal',''));
+  const revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
+  function settleReveal(el){
+    setTimeout(()=>{ el.removeAttribute('data-reveal'); el.classList.remove('in'); el.style.removeProperty('--d'); }, 1100);
+  }
+  if('IntersectionObserver' in window && !reduceMotion){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); settleReveal(en.target); }
+      });
+    }, {threshold:.1, rootMargin:'0px 0px -30px 0px'});
+    revealEls.forEach(el=>io.observe(el));
+  } else {
+    revealEls.forEach(el=>el.classList.add('in'));
+  }
+  // Safety net: nothing stays hidden if the observer stalls
+  setTimeout(()=>{
+    revealEls.forEach(el=>{
+      if(!el.classList.contains('in')){ el.classList.add('in'); settleReveal(el); }
+    });
+  }, 4000);
+
+  // Animated stat counters
+  const statNums = Array.from(document.querySelectorAll('[data-count]'));
+  function runCount(el){
+    const target = parseInt(el.getAttribute('data-count'), 10);
+    if(isNaN(target)) return;
+    if(reduceMotion){ el.textContent = target; return; }
+    const dur = 1100, t0 = performance.now();
+    function tick(t){
+      const p = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if(p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  if('IntersectionObserver' in window){
+    const cio = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ runCount(en.target); cio.unobserve(en.target); } });
+    }, {threshold:.4});
+    statNums.forEach(el=>cio.observe(el));
+  } else {
+    statNums.forEach(runCount);
+  }
+
+  // Scroll progress + back to top
+  const progress = document.getElementById('progress');
+  const toTop = document.getElementById('toTop');
+  function onScroll(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    const showToTop = h.scrollTop > 600;
+    toTop.hidden = !showToTop;
+    toTop.classList.toggle('show', showToTop);
+    if(!reduceMotion && heroContent){
+      const y = h.scrollTop;
+      if(y < 640){
+        heroContent.style.transform = 'translateY(' + (-y * 0.1).toFixed(1) + 'px)';
+        heroContent.style.opacity = Math.max(.45, 1 - y / 820).toFixed(2);
+      }
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'}));
+
+  // Life quote: clean grid with a dedicated full-screen image and video viewer.
+  const quoteGallery = document.getElementById('quoteGallery');
+  const quoteLightbox = document.getElementById('quoteLightbox');
+  if(quoteGallery && quoteLightbox){
+    const quoteTiles = Array.from(quoteGallery.querySelectorAll('.quote-tile'));
+    const quoteItems = quoteTiles.map(function(tile){
+      return {
+        type: tile.dataset.type,
+        src: tile.dataset.src,
+        poster: tile.dataset.poster || '',
+        title: tile.dataset.title,
+        alt: tile.dataset.alt || tile.dataset.title
+      };
+    });
+    const quoteLbImage = document.getElementById('quoteLbImage');
+    const quoteLbVideo = document.getElementById('quoteLbVideo');
+    const quoteLbTitle = document.getElementById('quoteLbTitle');
+    const quoteLbCount = document.getElementById('quoteLbCount');
+    const quoteLbClose = document.getElementById('quoteLbClose');
+    const quoteLbPrev = document.getElementById('quoteLbPrev');
+    const quoteLbNext = document.getElementById('quoteLbNext');
+    let quoteIndex = 0;
+    let quoteTrigger = null;
+    let quoteTouchX = null;
+
+    function renderQuoteItem(){
+      const item = quoteItems[quoteIndex];
+      if(!item) return;
+      quoteLbTitle.textContent = item.title;
+      quoteLbCount.textContent = String(quoteIndex + 1).padStart(2,'0') + ' / ' + String(quoteItems.length).padStart(2,'0');
+      quoteLbVideo.pause();
+      if(item.type === 'video'){
+        quoteLbImage.hidden = true;
+        quoteLbVideo.hidden = false;
+        quoteLbVideo.poster = item.poster;
+        quoteLbVideo.setAttribute('aria-label',item.alt);
+        if(quoteLbVideo.getAttribute('src') !== item.src){
+          quoteLbVideo.src = item.src;
+          quoteLbVideo.load();
+        }
+        const playback = quoteLbVideo.play();
+        if(playback && typeof playback.catch === 'function') playback.catch(function(){});
+      }else{
+        quoteLbVideo.hidden = true;
+        quoteLbVideo.removeAttribute('src');
+        quoteLbVideo.load();
+        quoteLbImage.hidden = false;
+        quoteLbImage.src = item.src;
+        quoteLbImage.alt = item.alt;
+      }
+    }
+
+    function openQuoteViewer(index,tile){
+      quoteIndex = Math.max(0,Math.min(quoteItems.length - 1,index));
+      quoteTrigger = tile || quoteTiles[quoteIndex];
+      renderQuoteItem();
+      quoteLightbox.classList.add('open');
+      quoteLightbox.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      quoteLbClose.focus({preventScroll:true});
+    }
+
+    function closeQuoteViewer(){
+      if(!quoteLightbox.classList.contains('open')) return;
+      quoteLightbox.classList.remove('open');
+      quoteLightbox.setAttribute('aria-hidden','true');
+      quoteLbVideo.pause();
+      document.body.style.overflow = '';
+      if(quoteTrigger) quoteTrigger.focus({preventScroll:true});
+    }
+
+    function stepQuote(direction){
+      quoteIndex = (quoteIndex + direction + quoteItems.length) % quoteItems.length;
+      renderQuoteItem();
+    }
+
+    quoteTiles.forEach(function(tile,index){
+      tile.addEventListener('click',function(){ openQuoteViewer(index,tile); });
+    });
+    quoteLbClose.addEventListener('click',closeQuoteViewer);
+    quoteLbPrev.addEventListener('click',function(){ stepQuote(-1); });
+    quoteLbNext.addEventListener('click',function(){ stepQuote(1); });
+    quoteLightbox.addEventListener('click',function(event){
+      if(event.target === quoteLightbox) closeQuoteViewer();
+    });
+    quoteLightbox.addEventListener('touchstart',function(event){
+      quoteTouchX = event.changedTouches[0].clientX;
+    },{passive:true});
+    quoteLightbox.addEventListener('touchend',function(event){
+      if(quoteTouchX === null) return;
+      const distance = event.changedTouches[0].clientX - quoteTouchX;
+      if(Math.abs(distance) > 48) stepQuote(distance < 0 ? 1 : -1);
+      quoteTouchX = null;
+    },{passive:true});
+    document.addEventListener('keydown',function(event){
+      if(!quoteLightbox.classList.contains('open')) return;
+      if(event.key === 'Escape') closeQuoteViewer();
+      if(event.key === 'ArrowRight'){ event.preventDefault(); stepQuote(1); }
+      if(event.key === 'ArrowLeft'){ event.preventDefault(); stepQuote(-1); }
+    });
+  }
+
+  // Interactive Ujire location card: flat, click-to-expand map reveal.
+  const locationMap = document.getElementById('locationMap');
+  if(locationMap){
+    function toggleLocationMap(){
+      const expanded = locationMap.classList.toggle('is-expanded');
+      locationMap.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      locationMap.setAttribute('aria-label', 'Ujire, Karnataka map. ' + (expanded ? 'Click to collapse' : 'Click to expand'));
+    }
+    locationMap.addEventListener('click', toggleLocationMap);
+    locationMap.addEventListener('keydown', function(event){
+      if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); toggleLocationMap(); }
+    });
+  }
+
+  // Oct 6 look: cursor-driven 3D tilt — hero title, section headings, gallery
+  // cards, the featured story and the Life quote tiles lean toward the pointer.
+  // Fine pointers only, and never under reduced-motion.
+  if(window.matchMedia('(pointer: fine)').matches && !reduceMotion){
+    const tilted = new WeakSet();
+    function attachTilt(el, maxDeg){
+      if(!el || tilted.has(el)) return;
+      tilted.add(el);
+      el.addEventListener('pointermove', function(event){
+        const rect = el.getBoundingClientRect();
+        if(!rect.width || !rect.height) return;
+        const px = (event.clientX - rect.left) / rect.width - .5;
+        const py = (event.clientY - rect.top) / rect.height - .5;
+        el.style.transition = 'transform .12s ease-out';
+        el.style.transform = 'perspective(950px) rotateX(' + (-py * maxDeg).toFixed(2) + 'deg) rotateY(' + (px * maxDeg).toFixed(2) + 'deg)';
+      });
+      el.addEventListener('pointerleave', function(){
+        el.style.transition = 'transform .55s cubic-bezier(.22,.61,.36,1)';
+        el.style.transform = '';
+      });
+    }
+    attachTilt(document.querySelector('.brand-3d'), 9);
+    document.querySelectorAll('.tilt3d').forEach(function(el){ attachTilt(el, 7); });
+    document.querySelectorAll('#grid .card').forEach(function(el){ attachTilt(el, 6); });
+    document.querySelectorAll('.quote-tile').forEach(function(el){ attachTilt(el, 7); });
+    attachTilt(document.querySelector('.featured'), 3.5);
+  }
+
+  applyFilters();
+})();
+</script>
+</body>
 </html>

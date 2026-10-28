@@ -1,21 +1,11 @@
-# Travel for love.
+# Travel for love — Swasthik's travel blog
 
-Premium interactive landing page for **Swasthik — Travel for love**, bike journeys across Karnataka, Tamil Nadu and Kerala.
+This repository hosts the travel blog previously published from Muse, now served
+via GitHub Pages at https://goodvenom.github.io/travel-for-love/
 
-## What's inside
+- `index.html` — the full site (single page, 8-tile Life quotes grid)
+- `assets/` — photos and videos used by the page (51 files)
+- `manifest.json` — asset list with sizes and SHA-256 hashes
 
-- **Custom gold cursor** — dot + trailing ring that expands over interactive elements
-- **3D cursor-driven hero** — background layers and the script title tilt in 3D toward your cursor
-- **Magnetic buttons**, **3D-tilting trip cards**, scroll reveals, destinations marquee, animated counters, film grain
-- Sections: nav, hero, marquee, featured story (Munnar hills), trip grid, manifesto, stats, footer
-
-## Run it
-
-Just open `index.html` in a browser — no build step. Or enable **GitHub Pages** (repo Settings → Pages → Deploy from branch → `main`, `/ (root)`) to get a live URL.
-
-## Design
-
-The Figma design file: [Travel for love — Landing Page](https://www.figma.com/design/D6zAiN8GpR1AIW1BZE5HEy)
-`figma-design.js` is the script used to generate it.
-
-© 2026 Swasthik · Travel for love.
+Old React landing-page files were replaced by this site on 2026-10-28 at the
+owner's instruction ("Replace the existing travel-for-love repo").
