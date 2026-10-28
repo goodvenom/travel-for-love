@@ -1187,6 +1187,15 @@
     .hero-overlay{background:linear-gradient(90deg,rgba(4,12,9,.48) 0%,rgba(4,12,9,.18) 62%,rgba(4,12,9,0) 100%),linear-gradient(180deg,rgba(4,12,9,.28) 0%,rgba(4,12,9,0) 38%,rgba(4,12,9,.25) 100%)}
     .hero-card:has(.ride-video.active) .hero-overlay{background:linear-gradient(90deg,rgba(4,12,9,.48) 0%,rgba(4,12,9,.18) 62%,rgba(4,12,9,0) 100%),linear-gradient(180deg,rgba(4,12,9,.28) 0%,rgba(4,12,9,0) 38%,rgba(4,12,9,.25) 100%)}
   }
+
+  /* ===== MOBILE HERO — text centred over the bike (red-box area, 2026-10-29) ===== */
+  @media(max-width:640px){
+    .hero-content{left:50%;right:auto;top:50%;bottom:auto;width:min(80%,300px);padding:0;text-align:center;transform:translateX(-50%)}
+    .hero h1{font-size:clamp(28px,8vw,32px)}
+    .hero p.lead.quote-lead{margin:10px auto 0;font-size:13px;line-height:1.42}
+    .hero-actions{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:14px;width:100%}
+    .hero-actions .btn{min-height:40px;padding:9px 14px;font-size:12.5px}
+  }
 </style>
 <script>document.documentElement.classList.add('js-anim');</script>
 </head>
