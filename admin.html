@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Travel for love — Gallery admin</title>
+<!--
+  GALLERY ADMIN — for the site owner only. NOT linked from the main site navigation.
+  Reachable only by opening /admin.html directly.
+  How it works: this page is a static file. There is no server and no database.
+  It talks directly from YOUR browser to api.github.com, using a GitHub Personal
+  Access Token (PAT) that you create yourself. The token is stored ONLY in this
+  browser's localStorage, is never written into this repo, and is never sent
+  anywhere except api.github.com. Use "Forget token / log out" to erase it.
+  No token is stored in this file. If you ever see a token value in this file,
+  delete it and revoke that token immediately.
+-->
+<style>
+  :root{--bg:#f7f4ee;--surface:#fffdf8;--ink:#1d2b26;--muted:#6b7a72;--line:#e2dccc;--accent:#2f7d5b;--accent-2:#f59e0b;--danger:#b42318}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 18px 60px}
+  h1{font-family:Georgia,serif;font-weight:400;font-size:32px;margin:0 0 4px}
+  h2{font-size:19px;margin:26px 0 8px}
+  p{margin:8px 0}
+  .sub{color:var(--muted)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin:16px 0}
+  .warn{background:#fff7e6;border:1px solid #f2d38a;border-radius:14px;padding:14px 16px}
+  .err{background:#fdeceb;border:1px solid #f0b3ae;border-radius:14px;padding:14px 16px;color:var(--danger)}
+  .ok{background:#eaf6ef;border:1px solid #a8d5b8;border-radius:14px;padding:14px 16px}
+  label{display:block;font-weight:600;margin:14px 0 4px}
+  input[type="text"],input[type="date"],input[type="password"],textarea,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff}
+  textarea{min-height:110px;resize:vertical}
+  button{appearance:none;border:0;border-radius:999px;padding:11px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}
+  button.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  button:disabled{opacity:.55;cursor:not-allowed}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .small{font-size:13.5px;color:var(--muted)}
+  .hidden{display:none !important}
+  .preview{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff;max-width:420px}
+  .preview .media{background:#dfe8e2;min-height:200px;display:grid;place-items:center}
+  .preview .media img,.preview .media video{width:100%;display:block;max-height:320px;object-fit:cover}
+  .preview .body{padding:16px}
+  .preview .loc{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .preview h3{font-family:Georgia,serif;font-weight:400;font-size:22px;margin:4px 0}
+  .preview .foot{display:flex;justify-content:space-between;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
+  a{color:var(--accent)}
+  code{background:#efe9db;border-radius:6px;padding:1px 6px;font-size:13.5px}
+  ol,ul{margin:8px 0;padding-left:22px}
+  li{margin:4px 0}
+  #status{white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Travel for love — gallery admin</h1>
+  <p class="sub">Owner-only page for adding a photo or video to the gallery on <a href="https://goodvenom.github.io/travel-for-love/">goodvenom.github.io/travel-for-love</a>. This page is <strong>not</strong> linked from the site's menu — it only opens if you type <code>/admin.html</code> directly. It does nothing useful without your own GitHub token, so visitors cannot use it.</p>
+
+  <!-- ============ STEP 1: TOKEN ============ -->
+  <section class="card" id="loginCard">
+    <h2>Step 1 — Sign in with a GitHub token</h2>
+    <p>GitHub does not let a static page sign you in with a password, so this page uses a <strong>Personal Access Token (PAT)</strong> instead. Think of it as a password that only works for this one repo, and that you can revoke at any time.</p>
+    <div class="warn">
+      <strong>Create your token (do this once, on GitHub — about 2 minutes):</strong>
+      <ol>
+        <li>Open <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener">github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens</a> and click <strong>Generate new token</strong>.</li>
+        <li>Under <strong>Repository access</strong>, choose <strong>Only select repositories</strong> and pick <strong>only <code>goodvenom/travel-for-love</code></strong> — nothing else.</li>
+        <li>Under <strong>Permissions → Repository permissions</strong>, set <strong>Contents</strong> to <strong>Read and write</strong>. Leave everything else unset.</li>
+        <li>Set a <strong>short expiry</strong> (for example 30 days). When it expires, GitHub will simply stop accepting it and you create a new one.</li>
+        <li>Click <strong>Generate token</strong> and copy it immediately — GitHub shows it only once.</li>
+      </ol>
+      <p><strong>Keep that token private.</strong> Anyone with it can edit this repo. Never paste it into a chat, an email, or a file in the repo. It is stored <strong>only in this browser</strong> (localStorage) when you paste it below, and is sent <strong>only to api.github.com</strong>. To erase it from this browser, use “Forget token / log out”. To kill it everywhere, delete it on the same GitHub tokens page.</p>
+    </div>
+    <label for="tokenInput">Paste your token here</label>
+    <input type="password" id="tokenInput" autocomplete="off" spellcheck="false" placeholder="github_pat_…" />
+    <div class="row" style="margin-top:12px">
+      <button id="saveTokenBtn" type="button">Save token &amp; check access</button>
+      <button id="forgetTokenBtn" type="button" class="secondary hidden">Forget token / log out</button>
+    </div>
+    <p id="tokenState" class="small"></p>
+    <div id="loginError" class="err hidden"></div>
+  </section>
+
+  <!-- ============ STEP 2: FORM ============ -->
+  <section class="card hidden" id="formCard">
+    <h2>Step 2 — Add a gallery photo or video</h2>
+    <p class="small">Signed in as repo owner (token ends in <code id="tokenTail"></code> — the full token is never shown). <button id="forgetTokenBtn2" type="button" class="secondary">Forget token / log out</button></p>
+
+    <label for="fileInput">Photo or video</label>
+    <input type="file" id="fileInput" accept="image/*,video/*" />
+    <p id="fileInfo" class="small"></p>
+    <div id="sizeWarn" class="warn hidden"></div>
+
+    <label for="titleInput">Trip title</label>
+    <input type="text" id="titleInput" placeholder="e.g. Sunset at Agumbe" maxlength="80" />
+
+    <label for="locInput">Place / location line</label>
+    <input type="text" id="locInput" placeholder="e.g. Agumbe, Shivamogga district" maxlength="80" />
+
+    <label for="tagInput">Category tag</label>
+    <select id="tagInput">
+      <option>Hills</option><option>Nature</option><option>Beach</option><option>Waterfalls</option>
+      <option>Temple</option><option>City</option><option>Adventure</option><option>Sunset</option>
+    </select>
+
+    <label for="dateInput">Date</label>
+    <input type="date" id="dateInput" />
+
+    <label for="descInput">About this place (this is the card's description)</label>
+    <textarea id="descInput" placeholder="Write a few lines about the place — what it is, what you saw, why it is worth a visit…" maxlength="600"></textarea>
+
+    <h2>Live preview</h2>
+    <p class="small">This is how the card will look in the gallery (the live site's own fonts and colours apply once published).</p>
+    <div class="preview" id="preview">
+      <div class="media" id="previewMedia"><span class="small">Your photo or video preview will appear here.</span></div>
+      <div class="body">
+        <div class="loc" id="previewLoc">Place, district</div>
+        <h3 id="previewTitle">Trip title</h3>
+        <p id="previewDesc">Your description will appear here.</p>
+        <div class="foot"><span id="previewDate">Today</span><strong>Read →</strong></div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+      <button id="publishBtn" type="button">Publish to gallery</button>
+    </div>
+    <div id="status" style="margin-top:14px"></div>
+  </section>
+
+  <p class="small">How publishing works: (1) your file is uploaded to the repo's <code>assets/</code> folder, then (2) a new gallery card is added to <code>index.html</code> and committed. Both steps use your token, from this browser, to api.github.com only. After a successful publish, GitHub Pages rebuilds in about 1–2 minutes — hard-reload the live site to see the new card.</p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var OWNER = "goodvenom", REPO = "travel-for-love", BRANCH = "main";
+  var LIVE = "https://goodvenom.github.io/travel-for-love/";
+  var KEY = "tfl_admin_token";
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+
+  function $(id){ return document.getElementById(id); }
+  function esc(s){
+    return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  }
+  function slugify(s){
+    return String(s || "").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "trip";
+  }
+  function fmtDate(iso){
+    if(!iso) return "";
+    var p = iso.split("-"); if(p.length !== 3) return iso;
+    return parseInt(p[2],10) + " " + MONTHS[parseInt(p[1],10)-1] + " " + p[0];
+  }
+  function show(el, msg, cls){
+    el.className = cls || ""; el.innerHTML = msg; el.classList.remove("hidden");
+  }
+  function hide(el){ el.classList.add("hidden"); }
+  function getToken(){ try { return localStorage.getItem(KEY) || ""; } catch(e){ return ""; } }
+  function setToken(t){ try { localStorage.setItem(KEY, t); } catch(e){} }
+  function forgetToken(){
+    try { localStorage.removeItem(KEY); } catch(e){}
+    $("tokenInput").value = "";
+    showLogin(); show($("tokenState"), "Token forgotten on this browser.", "small");
+  }
+  function api(path, method, body){
+    var token = getToken();
+    return fetch("https://api.github.com" + path, {
+      method: method || "GET",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      },
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function(res){
+      return res.json().then(function(json){
+        if(!res.ok){
+          var err = new Error((json && json.message) || ("GitHub error " + res.status));
+          err.status = res.status; err.json = json; throw err;
+        }
+        return json;
+      });
+    });
+  }
+  function b64encodeUtf8(str){
+    var bytes = new TextEncoder().encode(str), out = "", i;
+    for(i = 0; i < bytes.length; i += 8192){
+      out += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192));
+    }
+    return btoa(out);
+  }
+  function b64decodeUtf8(b64){
+    var bin = atob(b64.replace(/\s/g,"")), bytes = new Uint8Array(bin.length), i;
+    for(i = 0; i < bin.length; i++){ bytes[i] = bin.charCodeAt(i); }
+    return new TextDecoder().decode(bytes);
+  }
+
+  // ---- login view ----
+  function showLogin(){
+    $("loginCard").classList.remove("hidden");
+    $("formCard").classList.add("hidden");
+    $("forgetTokenBtn").classList.add("hidden");
+    hide($("loginError"));
+  }
+  function showForm(){
+    var t = getToken();
+    $("loginCard").classList.add("hidden");
+    $("formCard").classList.remove("hidden");
+    $("forgetTokenBtn").classList.remove("hidden");
+    $("tokenTail").textContent = "••••" + t.slice(-4);
+    $("tokenState").textContent = "Token saved in this browser only (ends in " + t.slice(-4) + ").";
+  }
+  $("saveTokenBtn").addEventListener("click", function(){
+    var t = $("tokenInput").value.trim();
+    if(!t){ show($("loginError"), "Paste a token first.", "err"); return; }
+    setToken(t); hide($("loginError"));
+    $("saveTokenBtn").disabled = true; $("saveTokenBtn").textContent = "Checking…";
+    api("/repos/" + OWNER + "/" + REPO, "GET").then(function(){
+      showForm();
+    }).catch(function(err){
+      try { localStorage.removeItem(KEY); } catch(e){}
+      show($("loginError"), "GitHub rejected that token (" + (err.status || "?") + "): " + esc(err.message) +
+        ". Check the token, its expiry, and that it allows ONLY goodvenom/travel-for-love with Contents: Read and write.", "err");
+    }).finally(function(){
+      $("saveTokenBtn").disabled = false; $("saveTokenBtn").textContent = "Save token & check access";
+    });
+  });
+  $("forgetTokenBtn").addEventListener("click", forgetToken);
+  $("forgetTokenBtn2").addEventListener("click", forgetToken);
+
+  // ---- form ----
+  var today = new Date();
+  var localToday = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,"0") + "-" + String(today.getDate()).padStart(2,"0");
+  $("dateInput").value = localToday;
+  var chosenFile = null, chosenDataUrl = null, chosenBase64 = null;
+
+  function refreshPreview(){
+    $("previewTitle").textContent = $("titleInput").value.trim() || "Trip title";
+    $("previewLoc").textContent = $("locInput").value.trim() || "Place, district";
+    $("previewDesc").textContent = $("descInput").value.trim() || "Your description will appear here.";
+    $("previewDate").textContent = fmtDate($("dateInput").value) || "Today";
+    var media = $("previewMedia");
+    if(chosenDataUrl){
+      if(chosenFile && chosenFile.type.indexOf("video") === 0){
+        media.innerHTML = '<video src="' + chosenDataUrl + '" controls muted loop playsinline style="max-height:320px"></video>';
+      } else {
+        media.innerHTML = '<img src="' + chosenDataUrl + '" alt="Preview" />';
+      }
+    }
+  }
+  ["titleInput","locInput","descInput","dateInput"].forEach(function(id){
+    $(id).addEventListener("input", refreshPreview);
+  });
+  $("tagInput").addEventListener("change", refreshPreview);
+
+  $("fileInput").addEventListener("change", function(){
+    chosenFile = $("fileInput").files[0] || null;
+    chosenDataUrl = null; chosenBase64 = null;
+    hide($("sizeWarn"));
+    if(!chosenFile){ $("fileInfo").textContent = ""; refreshPreview(); return; }
+    var mb = (chosenFile.size / 1048576);
+    $("fileInfo").textContent = chosenFile.name + " — " + mb.toFixed(1) + " MB (" + (chosenFile.type || "unknown type") + ")";
+    if(mb > 10){
+      show($("sizeWarn"), "This file is over 10 MB. It will still upload (GitHub allows up to 100 MB per file), but a smaller photo loads faster for visitors — consider resizing it before publishing.", "warn");
+    }
+    var reader = new FileReader();
+    reader.onload = function(){
+      chosenDataUrl = reader.result;
+      chosenBase64 = String(reader.result).split(",")[1] || "";
+      refreshPreview();
+    };
+    reader.readAsDataURL(chosenFile);
+  });
+
+  function buildCard(assetPath, isVideo, title, loc, tag, dateText, desc){
+    var slug = slugify(title);
+    var tagWords = (tag + " " + title + " " + loc).toLowerCase().replace(/[^a-z0-9 ]+/g," ").split(/\s+/).filter(Boolean);
+    var tags = tagWords.filter(function(w, i){ return tagWords.indexOf(w) === i; }).join(" ");
+    var media = isVideo
+      ? '<video src="' + esc(assetPath) + '" autoplay muted loop playsinline preload="metadata" aria-label="Video from ' + esc(title) + '"></video>'
+      : '<img src="' + esc(assetPath) + '" alt="' + esc(title) + ', ' + esc(loc) + '" loading="lazy" />';
+    return '      <article class="card" data-id="' + esc(slug) + '" data-region="' + esc(tag.toLowerCase()) + '" data-tags="' + esc(tags) + '" tabindex="0">\n' +
+      '        <div class="card-media">\n' +
+      '          ' + media + '\n' +
+      '          <span class="tag">' + esc(tag) + '</span>\n' +
+      '        </div>\n' +
+      '        <div class="card-body">\n' +
+      '          <div class="loc">' + esc(loc) + '</div>\n' +
+      '          <h3>' + esc(title) + '</h3>\n' +
+      '          <p>' + esc(desc) + '</p>\n' +
+      '          <div class="card-foot"><span>' + esc(dateText) + '</span><strong>Read →</strong></div>\n' +
+      '        </div>\n' +
+      '      </article>\n';
+  }
+
+  $("publishBtn").addEventListener("click", function(){
+    var title = $("titleInput").value.trim();
+    var loc = $("locInput").value.trim();
+    var tag = $("tagInput").value;
+    var dateText = fmtDate($("dateInput").value);
+    var desc = $("descInput").value.trim();
+    var status = $("status");
+    if(!getToken()){ show(status, "No token saved. Go back to Step 1 and save a token first.", "err"); return; }
+    if(!chosenFile || !chosenBase64){ show(status, "Choose a photo or video first.", "err"); return; }
+    if(!title || !loc || !desc){ show(status, "Fill in the trip title, place line, and description before publishing.", "err"); return; }
+    if(chosenFile.size > 100 * 1048576){ show(status, "That file is over GitHub's 100 MB per-file limit. Please use a smaller file.", "err"); return; }
+
+    $("publishBtn").disabled = true; $("publishBtn").textContent = "Publishing…";
+    show(status, "Step 1 of 2: uploading your file to assets/ …", "small");
+
+    var ext = (chosenFile.name.split(".").pop() || "").toLowerCase().replace(/[^a-z0-9]/g,"") || (chosenFile.type.indexOf("video") === 0 ? "mp4" : "jpg");
+    var stamp = new Date().toISOString().replace(/[-:T]/g,"").slice(0,14);
+    var baseName = "admin-" + stamp + "-" + slugify(title);
+    var assetName = baseName + "." + ext;
+    var assetPath = "assets/" + assetName;
+    var isVideo = chosenFile.type.indexOf("video") === 0;
+
+    function uploadAsset(name, attempt){
+      return api("/repos/" + OWNER + "/" + REPO + "/contents/assets/" + encodeURIComponent(name), "PUT", {
+        message: "Admin: add gallery asset " + name,
+        content: chosenBase64,
+        branch: BRANCH
+      }).catch(function(err){
+        if(err.status === 422 && attempt < 3){
+          return uploadAsset(baseName + "-" + attempt + "." + ext, attempt + 1);
+        }
+        throw err;
+      });
+    }
+
+    uploadAsset(assetName, 2).then(function(uploaded){
+      assetPath = uploaded.content ? uploaded.content.path : assetPath;
+      show(status, "File uploaded as " + assetPath + ".\nStep 2 of 2: adding the gallery card to index.html …", "small");
+      return api("/repos/" + OWNER + "/" + REPO + "/contents/index.html?ref=" + BRANCH, "GET").then(function(file){
+        var html = b64decodeUtf8(file.content);
+        var marker = '      <div class="empty" id="emptyState"';
+        var at = html.indexOf(marker);
+        if(at === -1){
+          throw new Error("Could not find the gallery insertion point in index.html. Your file WAS uploaded as " + assetPath +
+            ", but no card was added — nothing else was changed. Tell the site owner the asset path so the card can be added by hand.");
+        }
+        var card = buildCard(assetPath, isVideo, title, loc, tag, dateText, desc);
+        var updated = html.slice(0, at) + card + "\n" + html.slice(at);
+        return api("/repos/" + OWNER + "/" + REPO + "/contents/index.html", "PUT", {
+          message: "Admin: add gallery card " + title,
+          content: b64encodeUtf8(updated),
+          sha: file.sha,
+          branch: BRANCH
+        });
+      }).catch(function(err){
+        // Asset is already uploaded at this point; say so plainly, never hide it.
+        if(err.message && err.message.indexOf("WAS uploaded") !== -1) throw err;
+        throw new Error("The gallery card could NOT be added (" + (err.status || "?") + ": " + err.message +
+          "). Your file WAS already uploaded as " + assetPath + ", so it is not lost — but no card points at it yet. " +
+          "You can retry publishing (it will upload the file again under a new name), or ask the site owner to add the card by hand.");
+      });
+    }).then(function(){
+      show(status, "Published! Your card “" + title + "” is now in the gallery.\n\nSee it live (give Pages 1–2 minutes, then hard-reload): " + LIVE, "ok");
+      var a = document.createElement("p");
+      var link = document.createElement("a");
+      link.href = LIVE; link.target = "_blank"; link.rel = "noopener"; link.textContent = "Open the live site →";
+      a.appendChild(link); status.appendChild(a);
+      $("fileInput").value = ""; chosenFile = null; chosenDataUrl = null; chosenBase64 = null;
+      $("titleInput").value = ""; $("locInput").value = ""; $("descInput").value = "";
+      $("fileInfo").textContent = ""; refreshPreview();
+    }).catch(function(err){
+      show(status, "Publish failed: " + esc(err.message), "err");
+    }).finally(function(){
+      $("publishBtn").disabled = false; $("publishBtn").textContent = "Publish to gallery";
+    });
+  });
+
+  // init
+  refreshPreview();
+  if(getToken()){
+    // Token present from an earlier visit: verify it still works before showing the form.
+    api("/repos/" + OWNER + "/" + REPO, "GET").then(showForm).catch(function(){
+      showLogin();
+      show($("loginError"), "Your saved token no longer works (it may have expired or been revoked). Paste a new one below.", "err");
+    });
+  } else {
+    showLogin();
+  }
+})();
+</script>
+</body>
+</html>
